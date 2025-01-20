@@ -1,0 +1,67 @@
+Información del Proyecto
+El proyecto y su implementación se basan en un tema de tu elección.
+Tu proyecto debe cumplir con los siguientes requisitos básicos:
+
+1. Definición de una base de información en XML
+
+Es necesario definir una base de información en formato XML (un documento XML y su estructura) sobre un tema diferente al utilizado en los laboratorios.
+
+    - Incluye al menos tres categorías de información.
+    - A diferencia de las tareas de laboratorio, intenta modelar estas categorías de manera lo más completa posible. (Nivel A)
+
+2. Servicios básicos
+
+Una vez definida la base de información (el documento XML con su estructura), será necesario implementar algunos servicios básicos. (Nivel A)
+
+    - Estos servicios deben incluir habilidades para manipular documentos XML, como crear, eliminar, agregar y actualizar nodos, así como buscar y filtrar información.
+    - El uso de XPath y XSLT es obligatorio para implementar algunos de estos servicios.
+    - (Opcional) Puedes considerar el uso de XQuery con eXistDB o BaseX como alternativa para realizar consultas.
+
+3. Tareas "útiles"
+
+Tu proyecto no debe limitarse a la manipulación de documentos XML. Debe realizar tareas útiles, como operaciones de cálculo. (Nivel B obligatorio)
+
+4. APIs
+
+Identifica al menos dos APIs diferentes para tu aplicación.
+
+    - Una puede ofrecer una API REST (basada en XML o JSON2XML).
+    - Otra podría ser una API basada en SOAP/WSDL (servicios web) o alguna API definida por el usuario.
+    - (Opcional para Nivel A) Al menos una API es obligatoria para (Nivel B), mientras que ambas son necesarias para (Nivel C) y la calificación máxima.
+    - (Opcional) Puedes usar Apache Camel para exponer algunas de estas APIs. Esto es obligatorio para (Nivel B).
+
+5. Pruebas de accesibilidad
+
+Debes demostrar que tus servicios básicos son accesibles utilizando frameworks de pruebas REST/WS (como SoapUI si implementas ambos tipos de APIs).
+
+6. Interfaz de usuario (UI)
+
+Una interfaz para invocar servicios es obligatoria a partir de (Nivel B).
+
+    - Esta interfaz debe construirse con XForms y ser capaz de consumir al menos una de las APIs expuestas (preferiblemente ambas).
+    - En caso de no usar XForms, una solución basada en AJAX que cumpla funciones similares podría otorgar un puntaje menor (menos del 75% en esta sección).
+
+7. Escenarios complejos e integración (Nivel C)
+
+Debes implementar escenarios complejos expuestos mediante APIs e integrar los servicios básicos.
+
+    - Encuentra patrones de integración apropiados y documenta cómo se usaron los Enterprise Integration Patterns (EIPs) de Apache Camel. (Opcional) Puedes integrar un motor de flujo de trabajo basado en BPMN (como Camunda o Activiti) e incluir diagramas BPMN en tu documentación.
+
+8. Recomendaciones adicionales
+
+    - Usa colas de mensajes (JMS, ActiveMQ) para manejar mensajes de servicios y gana puntos adicionales.
+    - Considera Apache Camel con rutas estáticas (archivos XML con recetas basadas en EIPs) o rutas programables en lenguajes como Java o Scala.
+
+Niveles del Proyecto : 
+
+Nivel A: Desarrollo individual con una base XML completamente desarrollada, operaciones básicas implementadas e integradas con XPath y XSLT.
+
+Nivel B: Integración con XForms obligatoria y al menos una API completamente desarrollada.
+
+Nivel C: Implementación de colas de mensajes, Apache Camel, BPMN o tecnologías avanzadas como XProc.
+
+Presentación del Proyecto : 
+
+La presentación comenzará el 14 de enero y finalizará al término de la sesión A1.
+La sesión B1 (febrero) también es aceptable, pero los proyectos deben subirse antes del final de la sesión A1.
+¡Eso es todo, amigos!
