@@ -1,446 +1,535 @@
 <!DOCTYPE html>
-<xh:html 
-   xmlns:xh="http://www.w3.org/1999/xhtml" 
-   xmlns:xf="http://www.w3.org/2002/xforms" 
-   xmlns:ev="http://www.w3.org/2001/xml-events">
-   <xh:head>
-      <xh:title>Zoo, Animal, and Conservation Management</xh:title>
-      <xf:model>
-         <!-- Main Instance -->
-         <xf:instance>
-            <zoos xmlns="">
-               <!-- Zoos -->
-               <zoo id="zoo01" location="Europe">
-                  <name>Updated Berlin Zoo</name>
-                  <city>Berlin</city>
-                  <foundation>1850</foundation>
-            </zoo>
-            
-            <zoo id="zoo03" location="Asia">
-                  <name>Updated Ueno Zoo</name>
-                  <city>Updated Tokyo</city>
-                  <foundation>2000</foundation>
-            </zoo>
-            <zoo id="zoo04" location="Europe">
-                  <name>London Zoo</name>
-                  <city>London</city>
-                  <foundation>1828</foundation>
-            </zoo>
-            <zoo id="zoo05" location="Oceania">
-                  <name>Taronga Zoo</name>
-                  <city>Sydney</city>
-                  <foundation>1916</foundation>
-            </zoo>
-            <zoo id="zoo06" location="Africa">
-                  <name>Johannesburg Zoo</name>
-                  <city>Johannesburg</city>
-                  <foundation>1904</foundation>
-            </zoo>
-            <zoo id="zoo07" location="America">
-                  <name>Bronx Zoo</name>
-                  <city>New York</city>
-                  <foundation>1899</foundation>
-            </zoo>
-            <zoo id="zoo08" location="Asia">
-                  <name>Singapore Zoo</name>
-                  <city>Singapore</city>
-                  <foundation>1973</foundation>
-            </zoo>
-            <zoo id="zoo09" location="Europe">
-                  <name>Lisbon Biological Park</name>
-                  <city>Lisbon</city>
-                  <foundation>1884</foundation>
-            </zoo>
-            <zoo id="zoo10" location="America">
-                  <name>Chapultepec Zoo</name>
-                  <city>Mexico City</city>
-                  <foundation>1923</foundation>
-            </zoo>
-            <zoo id="zoo11" location="Europe">
-                  <name>Prague Zoo</name>
-                  <city>Prague</city>
-                  <foundation>1931</foundation>
-            </zoo>
-            <zoo id="zoo12" location="Asia">
-                  <name>Shanghai Zoo</name>
-                  <city>Shanghai</city>
-                  <foundation>1954</foundation>
-            </zoo>
+<xh:html
+        xmlns:xh="http://www.w3.org/1999/xhtml"
+        xmlns:xf="http://www.w3.org/2002/xforms"
+        xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xh:head>
+        <xh:title>Zoo, Animal, and Conservation Management</xh:title>
+        <xf:model>
+            <!-- Main Instance -->
+            <xf:instance>
+                <zoos xmlns="">
+                    <!-- Zoos -->
+                    <zoo id="zoo01" location="Europe">
+                        <name>Updated Berlin Zoo</name>
+                        <city>Berlin</city>
+                        <foundation>1850</foundation>
+                    </zoo>
 
-            <!-- Animals -->
-            <animal id="animal01" species="Mammal" zooid="zoo01">
-                  <name>Lion</name>
-                  <scientific_name>Panthera leo</scientific_name>
-                  <habitat>Savanna</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
-            <animal id="animal02" species="Bird" zooid="zoo02">
-                  <name>Bald Eagle</name>
-                  <scientific_name>Haliaeetus leucocephalus</scientific_name>
-                  <habitat>Forests and rivers</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
-            <animal id="animal03" species="Reptile" zooid="zoo03">
-                  <name>Komodo Dragon</name>
-                  <scientific_name>Varanus komodoensis</scientific_name>
-                  <habitat>Tropical islands</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
-            <animal id="animal04" species="Mammal" zooid="zoo04">
-                  <name>African Elephant</name>
-                  <scientific_name>Loxodonta africana</scientific_name>
-                  <habitat>Savanna and forests</habitat>
-                  <diet>Herbivore</diet>
-            </animal>
-            <animal id="animal05" species="Mammal" zooid="zoo05">
-                  <name>Red Kangaroo</name>
-                  <scientific_name>Macropus rufus</scientific_name>
-                  <habitat>Deserts and grasslands</habitat>
-                  <diet>Herbivore</diet>
-            </animal>
-            <animal id="animal06" species="Mammal" zooid="zoo06">
-                  <name>Giraffe</name>
-                  <scientific_name>Giraffa camelopardalis</scientific_name>
-                  <habitat>Savanna</habitat>
-                  <diet>Herbivore</diet>
-            </animal>
-            <animal id="animal07" species="Amphibian" zooid="zoo07">
-                  <name>Strawberry Poison Frog</name>
-                  <scientific_name>Oophaga pumilio</scientific_name>
-                  <habitat>Tropical rainforests</habitat>
-                  <diet>Insectivore</diet>
-            </animal>
-            <animal id="animal08" species="Bird" zooid="zoo08">
-                  <name>Blue-and-Yellow Macaw</name>
-                  <scientific_name>Ara ararauna</scientific_name>
-                  <habitat>Tropical rainforests</habitat>
-                  <diet>Frugivore</diet>
-            </animal>
-            <animal id="animal09" species="Reptile" zooid="zoo09">
-                  <name>Green Anaconda</name>
-                  <scientific_name>Eunectes murinus</scientific_name>
-                  <habitat>Wetlands and rivers</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
-            <animal id="animal10" species="Mammal" zooid="zoo10">
-                  <name>Giant Panda</name>
-                  <scientific_name>Ailuropoda melanoleuca</scientific_name>
-                  <habitat>Bamboo forests</habitat>
-                  <diet>Herbivore</diet>
-            </animal>
-            <animal id="animal11" species="Bird" zooid="zoo11">
-                  <name>King Penguin</name>
-                  <scientific_name>Aptenodytes patagonicus</scientific_name>
-                  <habitat>Cold coasts</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
-            <animal id="animal12" species="Mammal" zooid="zoo12">
-                  <name>Bengal Tiger</name>
-                  <scientific_name>Panthera tigris tigris</scientific_name>
-                  <habitat>Jungles and mangroves</habitat>
-                  <diet>Carnivore</diet>
-            </animal>
+                    <zoo id="zoo03" location="Asia">
+                        <name>Updated Ueno Zoo</name>
+                        <city>Updated Tokyo</city>
+                        <foundation>2000</foundation>
+                    </zoo>
+                    <zoo id="zoo04" location="Europe">
+                        <name>London Zoo</name>
+                        <city>London</city>
+                        <foundation>1828</foundation>
+                    </zoo>
+                    <zoo id="zoo05" location="Oceania">
+                        <name>Taronga Zoo</name>
+                        <city>Sydney</city>
+                        <foundation>1916</foundation>
+                    </zoo>
+                    <zoo id="zoo06" location="Africa">
+                        <name>Johannesburg Zoo</name>
+                        <city>Johannesburg</city>
+                        <foundation>1904</foundation>
+                    </zoo>
+                    <zoo id="zoo07" location="America">
+                        <name>Bronx Zoo</name>
+                        <city>New York</city>
+                        <foundation>1899</foundation>
+                    </zoo>
+                    <zoo id="zoo08" location="Asia">
+                        <name>Singapore Zoo</name>
+                        <city>Singapore</city>
+                        <foundation>1973</foundation>
+                    </zoo>
+                    <zoo id="zoo09" location="Europe">
+                        <name>Lisbon Biological Park</name>
+                        <city>Lisbon</city>
+                        <foundation>1884</foundation>
+                    </zoo>
+                    <zoo id="zoo10" location="America">
+                        <name>Chapultepec Zoo</name>
+                        <city>Mexico City</city>
+                        <foundation>1923</foundation>
+                    </zoo>
+                    <zoo id="zoo11" location="Europe">
+                        <name>Prague Zoo</name>
+                        <city>Prague</city>
+                        <foundation>1931</foundation>
+                    </zoo>
+                    <zoo id="zoo12" location="Asia">
+                        <name>Shanghai Zoo</name>
+                        <city>Shanghai</city>
+                        <foundation>1954</foundation>
+                    </zoo>
 
-            <!-- Conservation Statistics -->
-            <conservation_statistic animalid="animal01" year="2023">
-                  <population_in_wild>20000</population_in_wild>
-                  <population_in_captivity>500</population_in_captivity>
-                  <status>Vulnerable</status>
-            </conservation_statistic>
-            <conservation_statistic animalid="animal02" year="2023">
-                  <population_in_wild>70000</population_in_wild>
-                  <population_in_captivity>300</population_in_captivity>
-                  <status>Least Concern</status>
-            </conservation_statistic>
-            <conservation_statistic animalid="animal03" year="2023">
-                  <population_in_wild>1400</population_in_wild>
-                  <population_in_captivity>70</population_in_captivity>
-                  <status>Endangered</status>
-            </conservation_statistic>
-            <conservation_statistic animalid="animal10" year="2023">
-                  <population_in_wild>1864</population_in_wild>
-                  <population_in_captivity>600</population_in_captivity>
-                  <status>Vulnerable</status>
-            </conservation_statistic>
+                    <!-- Animals -->
+                    <animal id="animal01" species="Mammal" zooid="zoo01">
+                        <name>Lion</name>
+                        <scientific_name>Panthera leo</scientific_name>
+                        <habitat>Savanna</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
+                    <animal id="animal02" species="Bird" zooid="zoo02">
+                        <name>Bald Eagle</name>
+                        <scientific_name>Haliaeetus leucocephalus</scientific_name>
+                        <habitat>Forests and rivers</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
+                    <animal id="animal03" species="Reptile" zooid="zoo03">
+                        <name>Komodo Dragon</name>
+                        <scientific_name>Varanus komodoensis</scientific_name>
+                        <habitat>Tropical islands</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
+                    <animal id="animal04" species="Mammal" zooid="zoo04">
+                        <name>African Elephant</name>
+                        <scientific_name>Loxodonta africana</scientific_name>
+                        <habitat>Savanna and forests</habitat>
+                        <diet>Herbivore</diet>
+                    </animal>
+                    <animal id="animal05" species="Mammal" zooid="zoo05">
+                        <name>Red Kangaroo</name>
+                        <scientific_name>Macropus rufus</scientific_name>
+                        <habitat>Deserts and grasslands</habitat>
+                        <diet>Herbivore</diet>
+                    </animal>
+                    <animal id="animal06" species="Mammal" zooid="zoo06">
+                        <name>Giraffe</name>
+                        <scientific_name>Giraffa camelopardalis</scientific_name>
+                        <habitat>Savanna</habitat>
+                        <diet>Herbivore</diet>
+                    </animal>
+                    <animal id="animal07" species="Amphibian" zooid="zoo07">
+                        <name>Strawberry Poison Frog</name>
+                        <scientific_name>Oophaga pumilio</scientific_name>
+                        <habitat>Tropical rainforests</habitat>
+                        <diet>Insectivore</diet>
+                    </animal>
+                    <animal id="animal08" species="Bird" zooid="zoo08">
+                        <name>Blue-and-Yellow Macaw</name>
+                        <scientific_name>Ara ararauna</scientific_name>
+                        <habitat>Tropical rainforests</habitat>
+                        <diet>Frugivore</diet>
+                    </animal>
+                    <animal id="animal09" species="Reptile" zooid="zoo09">
+                        <name>Green Anaconda</name>
+                        <scientific_name>Eunectes murinus</scientific_name>
+                        <habitat>Wetlands and rivers</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
+                    <animal id="animal10" species="Mammal" zooid="zoo10">
+                        <name>Giant Panda</name>
+                        <scientific_name>Ailuropoda melanoleuca</scientific_name>
+                        <habitat>Bamboo forests</habitat>
+                        <diet>Herbivore</diet>
+                    </animal>
+                    <animal id="animal11" species="Bird" zooid="zoo11">
+                        <name>King Penguin</name>
+                        <scientific_name>Aptenodytes patagonicus</scientific_name>
+                        <habitat>Cold coasts</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
+                    <animal id="animal12" species="Mammal" zooid="zoo12">
+                        <name>Bengal Tiger</name>
+                        <scientific_name>Panthera tigris tigris</scientific_name>
+                        <habitat>Jungles and mangroves</habitat>
+                        <diet>Carnivore</diet>
+                    </animal>
 
-            <!-- Messages -->
-            <message type="announcement">
-                  <content>A giant panda cub was born at the Berlin Zoo!</content>
-                  <date>2023-09-15</date>
-            </message>
-            <message type="announcement">
-                  <content>The London Zoo's new nocturnal exhibition opens this month.</content>
-                  <date>2023-07-20</date>
-            </message>
-               <!-- Templates for new entries -->
-               <newZoo>
-                  <id/>
-                  <name/>
-                  <city/>
-                  <foundation/>
-                  <location/>
-               </newZoo>
-               <newAnimal>
-                  <id/>
-                  <name/>
-                  <scientific_name/>
-                  <habitat/>
-                  <diet/>
-                  <species/>
-                  <zooid/>
-               </newAnimal>
-               <newConservation>
-                  <animalid/>
-                  <year/>
-                  <population_in_wild/>
-                  <population_in_captivity/>
-                  <status/>
-               </newConservation>
-            </zoos>
-         </xf:instance>
-      </xf:model>
-   </xh:head>
-   <xh:body>
-      <!-- Zoos Table -->
-      <xh:fieldset>
-         <xh:legend>Zoos List</xh:legend>
-         <xh:table border="1" style="width: 100%; border-collapse: collapse;">
-            <xh:thead>
-               <xh:tr>
-                  <xh:th>Zoo ID</xh:th>
-                  <xh:th>Name</xh:th>
-                  <xh:th>City</xh:th>
-                  <xh:th>Foundation</xh:th>
-                  <xh:th>Location</xh:th>
-                  <xh:th>Actions</xh:th>
-               </xh:tr>
-            </xh:thead>
-            <xh:tbody>
-               <xf:repeat id="zoosList" nodeset="/zoos/zoo">
-                  <xh:tr>
-                     <xh:td><xf:input ref="@id"/></xh:td>
-                     <xh:td><xf:input ref="name"/></xh:td>
-                     <xh:td><xf:input ref="city"/></xh:td>
-                     <xh:td><xf:input ref="foundation"/></xh:td>
-                     <xh:td><xf:input ref="@location"/></xh:td>
-                     <xh:td>
-                        <xf:trigger>
-                           <xf:label>Delete</xf:label>
-                           <xf:action ev:event="DOMActivate">
-                              <!-- Eliminar animales relacionados con este zoo -->
-                              <xf:delete ref="/zoos/animal[@zooid=current()/@id]"/>
-                              <!-- Eliminar el zoo -->
-                              <xf:delete ref="."/>
-                           </xf:action>
-                        </xf:trigger>
-                     </xh:td>
-                  </xh:tr>
-               </xf:repeat>
-            </xh:tbody>
-         </xh:table>
-         <!-- Add New Zoo -->
-         <xh:fieldset>
-            <xh:legend>Add a New Zoo</xh:legend>
-            <xh:p>
-               <xf:input ref="/zoos/newZoo/id">
-                  <xf:label>Zoo ID:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newZoo/name">
-                  <xf:label>Name:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newZoo/city">
-                  <xf:label>City:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newZoo/foundation">
-                  <xf:label>Foundation Year:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newZoo/location">
-                  <xf:label>Location:</xf:label>
-               </xf:input><br/>
-               <xf:trigger>
-                  <xf:label>Add Zoo</xf:label>
-                  <xf:action ev:event="DOMActivate">
-                     <xf:insert nodeset="/zoos/zoo" at="last()" position="after">
-                        <zoo>
-                           <name/><city/><foundation/><location/>
-                        </zoo>
-                     </xf:insert>
-                     <xf:setvalue ref="/zoos/zoo[last()]/@id" value="/zoos/newZoo/id"/>
-                     <xf:setvalue ref="/zoos/zoo[last()]/name" value="/zoos/newZoo/name"/>
-                     <xf:setvalue ref="/zoos/zoo[last()]/city" value="/zoos/newZoo/city"/>
-                     <xf:setvalue ref="/zoos/zoo[last()]/foundation" value="/zoos/newZoo/foundation"/>
-                     <xf:setvalue ref="/zoos/zoo[last()]/@location" value="/zoos/newZoo/location"/>
-                     <xf:setvalue ref="/zoos/newZoo/id" value=""/>
-                     <xf:setvalue ref="/zoos/newZoo/name" value=""/>
-                     <xf:setvalue ref="/zoos/newZoo/city" value=""/>
-                     <xf:setvalue ref="/zoos/newZoo/foundation" value=""/>
-                     <xf:setvalue ref="/zoos/newZoo/location" value=""/>
-                  </xf:action>
-               </xf:trigger>
-            </xh:p>
-         </xh:fieldset>
-      </xh:fieldset>
+                    <!-- Conservation Statistics -->
+                    <conservation_statistic animalid="animal01" year="2023">
+                        <population_in_wild>20000</population_in_wild>
+                        <population_in_captivity>500</population_in_captivity>
+                        <status>Vulnerable</status>
+                    </conservation_statistic>
+                    <conservation_statistic animalid="animal02" year="2023">
+                        <population_in_wild>70000</population_in_wild>
+                        <population_in_captivity>300</population_in_captivity>
+                        <status>Least Concern</status>
+                    </conservation_statistic>
+                    <conservation_statistic animalid="animal03" year="2023">
+                        <population_in_wild>1400</population_in_wild>
+                        <population_in_captivity>70</population_in_captivity>
+                        <status>Endangered</status>
+                    </conservation_statistic>
+                    <conservation_statistic animalid="animal10" year="2023">
+                        <population_in_wild>1864</population_in_wild>
+                        <population_in_captivity>600</population_in_captivity>
+                        <status>Vulnerable</status>
+                    </conservation_statistic>
 
-      <!-- Animals Table -->
-      <xh:fieldset>
-         <xh:legend>Animals List</xh:legend>
-         <xh:table border="1" style="width: 100%; border-collapse: collapse;">
-            <xh:thead>
-               <xh:tr>
-                  <xh:th>Animal ID</xh:th>
-                  <xh:th>Zoo ID</xh:th>
-                  <xh:th>Name</xh:th>
-                  <xh:th>Specie</xh:th>
-                  <xh:th>Actions</xh:th>
-               </xh:tr>
-            </xh:thead>
-            <xh:tbody>
-               <xf:repeat id="animalsList" nodeset="/zoos/animal">
-                  <xh:tr>
-                     <xh:td><xf:input ref="@id"/></xh:td>
-                     <xh:td><xf:input ref="@zooid"/></xh:td>
-                     <xh:td><xf:input ref="name"/></xh:td>
-                     <xh:td><xf:input ref="@species"/></xh:td>
-                     
-                     <xh:td>
-                        <xf:trigger>
-                           <xf:label>Delete</xf:label>
-                           <xf:action ev:event="DOMActivate">
-                              <!-- Eliminar estadísticas de conservación relacionadas con este animal -->
-                              <xf:delete ref="/zoos/conservation_statistic[@animalid=current()/@id]"/>
-                              <!-- Eliminar el animal -->
-                              <xf:delete ref="."/>
-                           </xf:action>
-                        </xf:trigger>
-                     </xh:td>
-                  </xh:tr>
-               </xf:repeat>
-            </xh:tbody>
-         </xh:table>
-         
-         <!-- Add New Animal -->
-         <xh:fieldset>
-            <xh:legend>Add a New Animal</xh:legend>
-            <xh:p>
-               <xf:input ref="/zoos/newAnimal/id">
-                  <xf:label>Animal ID:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newAnimal/zooid">
-                  <xf:label>Zoo ID:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newAnimal/name">
-                  <xf:label>Name:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newAnimal/species">
-                  <xf:label>Species:</xf:label>
-               </xf:input><br/>
-               
-               
-               <xf:trigger>
-                  <xf:label>Add Animal</xf:label>
-                  <xf:action ev:event="DOMActivate">
-                     <!-- Inserta un nuevo nodo animal con atributos y elementos necesarios -->
-                     <xf:insert nodeset="/zoos/animal" at="last()" position="after">
-                        <animal id="" zooid="" species="">
-                           <name/>
-                        </animal>
-                     </xf:insert>
+                    <!-- Messages -->
+                    <message type="announcement">
+                        <content>A giant panda cub was born at the Berlin Zoo!</content>
+                        <date>2023-09-15</date>
+                    </message>
+                    <message type="announcement">
+                        <content>The London Zoo's new nocturnal exhibition opens this month.</content>
+                        <date>2023-07-20</date>
+                    </message>
+                    <!-- Templates for new entries -->
+                    <newZoo>
+                        <id/>
+                        <name/>
+                        <city/>
+                        <foundation/>
+                        <location/>
+                    </newZoo>
+                    <newAnimal>
+                        <id/>
+                        <name/>
+                        <scientific_name/>
+                        <habitat/>
+                        <diet/>
+                        <species/>
+                        <zooid/>
+                    </newAnimal>
+                    <newConservation>
+                        <animalid/>
+                        <year/>
+                        <population_in_wild/>
+                        <population_in_captivity/>
+                        <status/>
+                    </newConservation>
+                </zoos>
+            </xf:instance>
+        </xf:model>
+    </xh:head>
+    <xh:body>
+        <!-- Zoos Table -->
+        <xh:fieldset>
+            <xh:legend>Zoos List</xh:legend>
+            <xh:table border="1" style="width: 100%; border-collapse: collapse;">
+                <xh:thead>
+                    <xh:tr>
+                        <xh:th>Name</xh:th>
+                        <xh:th>Zoo ID</xh:th>
+                        <xh:th>City</xh:th>
+                        <xh:th>Foundation</xh:th>
+                        <xh:th>Location</xh:th>
+                        <xh:th>Actions</xh:th>
+                    </xh:tr>
+                </xh:thead>
+                <xh:tbody>
+                    <xf:repeat id="zoosList" nodeset="/zoos/zoo">
+                        <xh:tr>
+                            <xh:td>
+                                <xf:input ref="name"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="@id"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="city"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="foundation"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="@location"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:trigger>
+                                    <xf:label>Delete</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <!-- Eliminar animales relacionados con este zoo -->
+                                        <xf:delete ref="/zoos/animal[@zooid=current()/@id]"/>
+                                        <!-- Eliminar el zoo -->
+                                        <xf:delete ref="."/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xh:td>
+                        </xh:tr>
+                    </xf:repeat>
+                </xh:tbody>
+            </xh:table>
+            <!-- Add New Zoo -->
+            <xh:fieldset>
+                <xh:legend>Add a New Zoo</xh:legend>
+                <xh:p>
+                    <xf:input ref="/zoos/newZoo/id">
+                        <xf:label>Zoo ID:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newZoo/name">
+                        <xf:label>Name:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newZoo/city">
+                        <xf:label>City:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newZoo/foundation">
+                        <xf:label>Foundation Year:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newZoo/location">
+                        <xf:label>Location:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:trigger>
+                        <xf:label>Add Zoo</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="/zoos/zoo" at="last()" position="after">
+                                <zoo>
+                                    <name/>
+                                    <city/>
+                                    <foundation/>
+                                    <location/>
+                                </zoo>
+                            </xf:insert>
+                            <xf:setvalue ref="/zoos/zoo[last()]/@id" value="/zoos/newZoo/id"/>
+                            <xf:setvalue ref="/zoos/zoo[last()]/name" value="/zoos/newZoo/name"/>
+                            <xf:setvalue ref="/zoos/zoo[last()]/city" value="/zoos/newZoo/city"/>
+                            <xf:setvalue ref="/zoos/zoo[last()]/foundation" value="/zoos/newZoo/foundation"/>
+                            <xf:setvalue ref="/zoos/zoo[last()]/@location" value="/zoos/newZoo/location"/>
+                            <xf:setvalue ref="/zoos/newZoo/id" value=""/>
+                            <xf:setvalue ref="/zoos/newZoo/name" value=""/>
+                            <xf:setvalue ref="/zoos/newZoo/city" value=""/>
+                            <xf:setvalue ref="/zoos/newZoo/foundation" value=""/>
+                            <xf:setvalue ref="/zoos/newZoo/location" value=""/>
+                        </xf:action>
+                    </xf:trigger>
+                </xh:p>
+            </xh:fieldset>
+        </xh:fieldset>
 
-                     <!-- Asigna los valores de los nuevos campos -->
-                     <xf:setvalue ref="/zoos/animal[last()]/@id" value="/zoos/newAnimal/id"/>
-                     <xf:setvalue ref="/zoos/animal[last()]/@zooid" value="/zoos/newAnimal/zooid"/>
-                     <xf:setvalue ref="/zoos/animal[last()]/@species" value="/zoos/newAnimal/species"/>
-                     <xf:setvalue ref="/zoos/animal[last()]/name" value="/zoos/newAnimal/name"/>
-                     
+        <!-- Animals Table -->
+        <xh:fieldset>
+            <xh:legend>Animals List</xh:legend>
+            <xh:table border="1" style="width: 100%; border-collapse: collapse;">
+                <xh:thead>
+                    <xh:tr>
+                        <xh:th>Name</xh:th>
+                        <xh:th>Animal ID</xh:th>
+                        <xh:th>Zoo</xh:th>
+                        <xh:th>Specie</xh:th>
+                        <xh:th>Actions</xh:th>
+                    </xh:tr>
+                </xh:thead>
+                <xh:tbody>
+                    <xf:repeat id="animalsList" nodeset="/zoos/animal">
+                        <xh:tr>
+                            <xh:td>
+                                <xf:input ref="name"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="@id"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:select1 ref="@zooid">
+                                    <xf:item>
+                                        <xf:label>Select Zoo</xf:label>
+                                        <xf:value></xf:value>
+                                    </xf:item>
+                                    <xf:itemset nodeset="/zoos/zoo">
+                                        <xf:label ref="name"/>
+                                        <xf:value ref="@id"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="@species"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:trigger>
+                                    <xf:label>Delete</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <!-- Eliminar estadísticas de conservación relacionadas con este animal -->
+                                        <xf:delete ref="/zoos/conservation_statistic[@animalid=current()/@id]"/>
+                                        <!-- Eliminar el animal -->
+                                        <xf:delete ref="."/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xh:td>
+                        </xh:tr>
+                    </xf:repeat>
+                </xh:tbody>
+            </xh:table>
 
-                     <!-- Limpia los campos después de la inserción -->
-                     <xf:setvalue ref="/zoos/newAnimal/id" value=""/>
-                     <xf:setvalue ref="/zoos/newAnimal/zooid" value=""/>
-                     <xf:setvalue ref="/zoos/newAnimal/name" value=""/>
-                     <xf:setvalue ref="/zoos/newAnimal/species" value=""/>
-                     
-                  </xf:action>
-               </xf:trigger>
-            </xh:p>
-         </xh:fieldset>
 
-      </xh:fieldset>
+            <!-- Add New Animal -->
+            <xh:fieldset>
+                <xh:legend>Add a New Animal</xh:legend>
+                <xh:p>
+                    <xf:input ref="/zoos/newAnimal/id">
+                        <xf:label>Animal ID:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:select1 ref="/zoos/newAnimal/zooid">
+                        <xf:label>Select Zoo:</xf:label>
+                        <xf:item>
+                            <xf:label>Select Zoo</xf:label>
+                            <xf:value></xf:value>
+                        </xf:item>
+                        <xf:itemset nodeset="/zoos/zoo">
+                            <xf:label ref="name"/>
+                            <xf:value ref="@id"/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <br/>
+                    <xf:input ref="/zoos/newAnimal/name">
+                        <xf:label>Name:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newAnimal/species">
+                        <xf:label>Species:</xf:label>
+                    </xf:input>
+                    <br/>
 
-      <!-- Conservation Statistics -->
-      <xh:fieldset>
-         <xh:legend>Conservation Statistics</xh:legend>
-         <xh:table border="1" style="width: 100%; border-collapse: collapse;">
-            <xh:thead>
-               <xh:tr>
-                  <xh:th>Animal ID</xh:th>
-                  <xh:th>Year</xh:th>
-                  <xh:th>Population (Wild)</xh:th>
-                  <xh:th>Population (Captivity)</xh:th>
-                  <xh:th>Status</xh:th>
-                  <xh:th>Actions</xh:th>
-               </xh:tr>
-            </xh:thead>
-            <xh:tbody>
-               <xf:repeat id="conservationList" nodeset="/zoos/conservation_statistic">
-                  <xh:tr>
-                     <xh:td><xf:input ref="@animalid"/></xh:td>
-                     <xh:td><xf:input ref="@year"/></xh:td>
-                     <xh:td><xf:input ref="population_in_wild"/></xh:td>
-                     <xh:td><xf:input ref="population_in_captivity"/></xh:td>
-                     <xh:td><xf:input ref="status"/></xh:td>
-                     <xh:td>
-                        <xf:trigger>
-                           <xf:label>Delete</xf:label>
-                           <xf:action ev:event="DOMActivate">
-                              <xf:delete ref="."/>
-                           </xf:action>
-                        </xf:trigger>
-                     </xh:td>
-                  </xh:tr>
-               </xf:repeat>
-            </xh:tbody>
-         </xh:table>
-         <!-- Add New Conservation Statistic -->
-         <xh:fieldset>
-            <xh:legend>Add a New Conservation Statistic</xh:legend>
-            <xh:p>
-               <xf:input ref="/zoos/newConservation/animalid">
-                  <xf:label>Animal ID:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newConservation/year">
-                  <xf:label>Year:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newConservation/population_in_wild">
-                  <xf:label>Population in Wild:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newConservation/population_in_captivity">
-                  <xf:label>Population in Captivity:</xf:label>
-               </xf:input><br/>
-               <xf:input ref="/zoos/newConservation/status">
-                  <xf:label>Status:</xf:label>
-               </xf:input><br/>
-               <xf:trigger>
-                  <xf:label>Add Statistic</xf:label>
-                  <xf:action ev:event="DOMActivate">
-                     <xf:insert nodeset="/zoos/conservation_statistic" at="last()" position="after">
-                        <conservation_statistic>
-                           <animalid/><year/><population_in_wild/><population_in_captivity/><status/>
-                        </conservation_statistic>
-                     </xf:insert>
-                     <xf:setvalue ref="/zoos/conservation_statistic[last()]/@animalid" value="/zoos/newConservation/animalid"/>
-                     <xf:setvalue ref="/zoos/conservation_statistic[last()]/@year" value="/zoos/newConservation/year"/>
-                     <xf:setvalue ref="/zoos/conservation_statistic[last()]/population_in_wild" value="/zoos/newConservation/population_in_wild"/>
-                     <xf:setvalue ref="/zoos/conservation_statistic[last()]/population_in_captivity" value="/zoos/newConservation/population_in_captivity"/>
-                     <xf:setvalue ref="/zoos/conservation_statistic[last()]/status" value="/zoos/newConservation/status"/>
-                     <xf:setvalue ref="/zoos/newConservation/animalid" value=""/>
-                     <xf:setvalue ref="/zoos/newConservation/year" value=""/>
-                     <xf:setvalue ref="/zoos/newConservation/population_in_wild" value=""/>
-                     <xf:setvalue ref="/zoos/newConservation/population_in_captivity" value=""/>
-                     <xf:setvalue ref="/zoos/newConservation/status" value=""/>
-                  </xf:action>
-               </xf:trigger>
-            </xh:p>
-         </xh:fieldset>
-      </xh:fieldset>
-   </xh:body>
+
+                    <xf:trigger>
+                        <xf:label>Add Animal</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <!-- Inserta un nuevo nodo animal con atributos y elementos necesarios -->
+                            <xf:insert nodeset="/zoos/animal" at="last()" position="after">
+                                <animal id="" zooid="" species="">
+                                    <name/>
+                                </animal>
+                            </xf:insert>
+
+                            <!-- Asigna los valores de los nuevos campos -->
+                            <xf:setvalue ref="/zoos/animal[last()]/@id" value="/zoos/newAnimal/id"/>
+                            <xf:setvalue ref="/zoos/animal[last()]/@zooid" value="/zoos/newAnimal/zooid"/>
+                            <xf:setvalue ref="/zoos/animal[last()]/@species" value="/zoos/newAnimal/species"/>
+                            <xf:setvalue ref="/zoos/animal[last()]/name" value="/zoos/newAnimal/name"/>
+
+
+                            <!-- Limpia los campos después de la inserción -->
+                            <xf:setvalue ref="/zoos/newAnimal/id" value=""/>
+                            <xf:setvalue ref="/zoos/newAnimal/zooid" value=""/>
+                            <xf:setvalue ref="/zoos/newAnimal/name" value=""/>
+                            <xf:setvalue ref="/zoos/newAnimal/species" value=""/>
+
+                        </xf:action>
+                    </xf:trigger>
+                </xh:p>
+            </xh:fieldset>
+
+        </xh:fieldset>
+
+        <!-- Conservation Statistics -->
+        <xh:fieldset>
+            <xh:legend>Conservation Statistics</xh:legend>
+            <xh:table border="1" style="width: 100%; border-collapse: collapse;">
+                <xh:thead>
+                    <xh:tr>
+                        <xh:th>Animal</xh:th>
+                        <xh:th>Year</xh:th>
+                        <xh:th>Population (Wild)</xh:th>
+                        <xh:th>Population (Captivity)</xh:th>
+                        <xh:th>Status</xh:th>
+                        <xh:th>Actions</xh:th>
+                    </xh:tr>
+                </xh:thead>
+                <xh:tbody>
+                    <xf:repeat id="conservationList" nodeset="/zoos/conservation_statistic">
+                        <xh:tr>
+                            <xh:td>
+                                <xf:select1 ref="@animalid">
+                                    <xf:item>
+                                        <xf:label>Select Animal</xf:label>
+                                        <xf:value></xf:value>
+                                    </xf:item>
+                                    <xf:itemset nodeset="/zoos/animal">
+                                        <xf:label ref="name"/>
+                                        <xf:value ref="@id"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xh:td>
+
+                            <xh:td>
+                                <xf:input ref="@year"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="population_in_wild"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="population_in_captivity"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:input ref="status"/>
+                            </xh:td>
+                            <xh:td>
+                                <xf:trigger>
+                                    <xf:label>Delete</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ref="."/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xh:td>
+                        </xh:tr>
+                    </xf:repeat>
+                </xh:tbody>
+            </xh:table>
+            <!-- Add New Conservation Statistic -->
+            <xh:fieldset>
+                <xh:legend>Add a New Conservation Statistic</xh:legend>
+                <xh:p>
+                    <xf:select1 ref="/zoos/newConservation/animalid">
+                        <xf:label>Select Animal:</xf:label>
+                        <xf:item>
+                            <xf:label>Select Animal</xf:label>
+                            <xf:value></xf:value>
+                        </xf:item>
+                        <xf:itemset nodeset="/zoos/animal">
+                            <xf:label ref="name"/>
+                            <xf:value ref="@id"/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <br/>
+                    <xf:input ref="/zoos/newConservation/year">
+                        <xf:label>Year:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newConservation/population_in_wild">
+                        <xf:label>Population in Wild:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newConservation/population_in_captivity">
+                        <xf:label>Population in Captivity:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:input ref="/zoos/newConservation/status">
+                        <xf:label>Status:</xf:label>
+                    </xf:input>
+                    <br/>
+                    <xf:trigger>
+                        <xf:label>Add Statistic</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="/zoos/conservation_statistic" at="last()" position="after">
+                                <conservation_statistic>
+                                    <animalid/>
+                                    <year/>
+                                    <population_in_wild/>
+                                    <population_in_captivity/>
+                                    <status/>
+                                </conservation_statistic>
+                            </xf:insert>
+                            <xf:setvalue ref="/zoos/conservation_statistic[last()]/@animalid"
+                                         value="/zoos/newConservation/animalid"/>
+                            <xf:setvalue ref="/zoos/conservation_statistic[last()]/@year"
+                                         value="/zoos/newConservation/year"/>
+                            <xf:setvalue ref="/zoos/conservation_statistic[last()]/population_in_wild"
+                                         value="/zoos/newConservation/population_in_wild"/>
+                            <xf:setvalue ref="/zoos/conservation_statistic[last()]/population_in_captivity"
+                                         value="/zoos/newConservation/population_in_captivity"/>
+                            <xf:setvalue ref="/zoos/conservation_statistic[last()]/status"
+                                         value="/zoos/newConservation/status"/>
+                            <xf:setvalue ref="/zoos/newConservation/animalid" value=""/>
+                            <xf:setvalue ref="/zoos/newConservation/year" value=""/>
+                            <xf:setvalue ref="/zoos/newConservation/population_in_wild" value=""/>
+                            <xf:setvalue ref="/zoos/newConservation/population_in_captivity" value=""/>
+                            <xf:setvalue ref="/zoos/newConservation/status" value=""/>
+                        </xf:action>
+                    </xf:trigger>
+                </xh:p>
+            </xh:fieldset>
+        </xh:fieldset>
+    </xh:body>
 </xh:html>
