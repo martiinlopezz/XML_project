@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoo Management System</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Zoo, Animal, and Conservation Management</h1>
+    </header>
+    <main>
+        <!-- Zoos Section -->
+        <section>
+            <h2>Zoos</h2>
+            <button onclick="getZoos()">Load Zoos</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Foundation</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody id="zoos-list"></tbody>
+            </table>
+            <h3>Add a Zoo</h3>
+            <form id="add-zoo-form">
+                <label for="zoo-name">Name:</label>
+                <input type="text" id="zoo-name" required>
+                <label for="zoo-city">City:</label>
+                <input type="text" id="zoo-city" required>
+                <label for="zoo-foundation">Foundation Year:</label>
+                <input type="number" id="zoo-foundation" required>
+                <label for="zoo-location">Location:</label>
+                <input type="text" id="zoo-location" required>
+                <button type="submit">Add Zoo</button>
+            </form>
+        </section>
+
+        <!-- Animals Section -->
+        <section>
+            <h2>Animals</h2>
+            <button onclick="getAnimals()">Load Animals</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th>Zoo ID</th>
+                        <th>Habitat</th>
+                        <th>Diet</th>
+                    </tr>
+                </thead>
+                <tbody id="animals-list"></tbody>
+            </table>
+            <h3>Add an Animal</h3>
+            <form id="add-animal-form">
+                <label for="animal-name">Name:</label>
+                <input type="text" id="animal-name" required>
+                <label for="animal-species">Species:</label>
+                <input type="text" id="animal-species" required>
+                <label for="animal-zooid">Zoo ID:</label>
+                <input type="text" id="animal-zooid" required>
+                <label for="animal-habitat">Habitat:</label>
+                <input type="text" id="animal-habitat" required>
+                <label for="animal-diet">Diet:</label>
+                <input type="text" id="animal-diet" required>
+                <label for="animal-scientific-name">Scientific Name:</label>
+                <input type="text" id="animal-scientific-name" required>
+                <button type="submit">Add Animal</button>
+            </form>
+            
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Zoo Management System</p>
+    </footer>
+    <script src="/static/script.js"></script>
+</body>
+</html>

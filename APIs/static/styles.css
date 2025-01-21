@@ -1,0 +1,127 @@
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Main Section */
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Titles */
+h2 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 5px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background: #f2f2f2;
+}
+
+tbody tr:hover {
+    background: #e0f7fa;
+}
+
+/* Forms */
+form {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    margin-top: 20px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
