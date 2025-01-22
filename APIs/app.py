@@ -54,10 +54,18 @@ def modify_zoo(zoo_id):
     return jsonify({"error": "Zoo not found"}), 404
 
 @app.route('/zoos/<zoo_id>', methods=['DELETE'])
-def remove_zoo(zoo_id):
-    if delete_zoo(XML_FILE, zoo_id):
-        return jsonify({"message": "Zoo deleted"})
-    return jsonify({"error": "Zoo not found"}), 404
+def delete_zoo_endpoint(zoo_id):
+    try:
+        deleted = delete_zoo(XML_FILE, zoo_id)  # Aquí pasamos correctamente los argumentos
+        if deleted:
+            return jsonify({"message": f"Zoo {zoo_id} and its associated animals deleted successfully."})
+        return jsonify({"error": f"Zoo {zoo_id} not found."}), 404
+    except Exception as e:
+        print(f"Error in delete_zoo endpoint: {e}")
+        return jsonify({"error": "Failed to delete zoo."}), 500
+
+
+
 
 # Rutas para Animales
 @app.route('/animals', methods=['GET'])
@@ -89,10 +97,12 @@ def modify_animal(animal_id):
     return jsonify({"error": "Animal not found"}), 404
 
 @app.route('/animals/<animal_id>', methods=['DELETE'])
-def remove_animal(animal_id):
-    if delete_animal(XML_FILE, animal_id):
-        return jsonify({"message": "Animal deleted"})
+def delete_animal_route(animal_id):
+    deleted = delete_animal(XML_FILE, animal_id)
+    if deleted:
+        return jsonify({"message": "Animal deleted successfully"}), 200
     return jsonify({"error": "Animal not found"}), 404
+
 
 # Rutas para estadísticas de conservación
 @app.route('/conservation_stats', methods=['GET'])

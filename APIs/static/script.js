@@ -13,6 +13,7 @@ function getZoos() {
                     <td>${zoo.city}</td>
                     <td>${zoo.foundation}</td>
                     <td>${zoo.location}</td>
+                    <td><button onclick="deleteZoo('${zoo.id}')">Delete</button></td>
                 </tr>`
             ).join('');
         });
@@ -44,6 +45,28 @@ function addZoo(event) {
         .catch(err => alert("Error: " + err.message));
 }
 
+
+function deleteZoo(zooId) {
+    if (!confirm(`Are you sure you want to delete Zoo ${zooId} and all its associated animals?`)) {
+        return;
+    }
+
+    fetch(`${API_URL}/zoos/${zooId}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw new Error(err.error); });
+            }
+            return response.json();
+        })
+        .then(() => {
+            getZoos(); // Refresh the zoo list
+            getAnimals(); // Refresh the animal list
+            alert(`Zoo ${zooId} and its associated animals deleted successfully.`);
+        })
+        .catch(err => alert("Error: " + err.message));
+}
+
+
 // Fetch Animals
 function getAnimals() {
     fetch(`${API_URL}/animals`)
@@ -58,10 +81,12 @@ function getAnimals() {
                     <td>${animal.zooid}</td>
                     <td>${animal.habitat}</td>
                     <td>${animal.diet}</td>
+                    <td><button onclick="deleteAnimal('${animal.id}')">Delete</button></td>
                 </tr>`
             ).join('');
         });
 }
+
 
 // Add Animal
 function addAnimal(event) {
@@ -90,6 +115,26 @@ function addAnimal(event) {
             document.getElementById('add-animal-form').reset();
         })
         .catch(err => alert("Error: " + err.message));
+}
+
+
+function deleteAnimal(animalId) {
+    if (confirm("Are you sure you want to delete this animal?")) {
+        fetch(`${API_URL}/animals/${animalId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw new Error(err.error); });
+            }
+            return response.json();
+        })
+        .then(() => {
+            alert("Animal deleted successfully");
+            getAnimals(); // Refresh the animals list
+        })
+        .catch(err => alert("Error: " + err.message));
+    }
 }
 
 

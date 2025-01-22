@@ -79,13 +79,32 @@ def update_zoo(file_path, zoo_id, data):
     return False
 
 def delete_zoo(file_path, zoo_id):
-    tree, root = load_xml(file_path)
-    zoo = root.find(f"zoo[@id='{zoo_id}']")
-    if zoo:
+    try:
+        # Load the XML file
+        tree, root = load_xml(file_path)
+
+        # Find the zoo node
+        zoo = root.find(f"zoo[@id='{zoo_id}']")
+        if not zoo:
+            return False
+
+        # Remove animals associated with this zoo
+        animals_to_remove = root.findall(f"animal[@zooid='{zoo_id}']")
+        for animal in animals_to_remove:
+            root.remove(animal)
+
+        # Remove the zoo node
         root.remove(zoo)
+
+        # Save the updated XML
         save_xml(tree, file_path)
         return True
-    return False
+    except Exception as e:
+        print(f"Error in delete_zoo: {e}")
+        return False
+
+
+
 
 # Funciones para Animales
 def get_all_animals(file_path):
@@ -171,6 +190,7 @@ def delete_animal(file_path, animal_id):
         save_xml(tree, file_path)
         return True
     return False
+
 
 # Funciones para Estadísticas de Conservación
 def get_all_conservation_stats(file_path):

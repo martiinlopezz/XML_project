@@ -1,16 +1,19 @@
-<?xml version='1.0' encoding='utf-8'?>
-<zoos>
-    
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><zoos>
+    <!-- Zoos -->
     <zoo id="zoo01" location="Europe">
-        <name>Updated Berlin Zoo</name>
+        <name>Berlin Zoo</name>
         <city>Berlin</city>
-        <foundation>1850</foundation>
+        <foundation>1844</foundation>
     </zoo>
-    
+    <zoo id="zoo02" location="America">
+        <name>San Diego Zoo</name>
+        <city>San Diego</city>
+        <foundation>1916</foundation>
+    </zoo>
     <zoo id="zoo03" location="Asia">
-        <name>Updated Ueno Zoo</name>
-        <city>Updated Tokyo</city>
-        <foundation>2000</foundation>
+        <name>Ueno Zoo</name>
+        <city>Tokyo</city>
+        <foundation>1882</foundation>
     </zoo>
     <zoo id="zoo04" location="Europe">
         <name>London Zoo</name>
@@ -58,8 +61,8 @@
         <foundation>1954</foundation>
     </zoo>
 
-    
-    <zoo id="zoo13" location="adsfs"><name>wdfwe</name><city>qwerew</city><foundation>1234</foundation></zoo><animal id="animal01" species="Mammal" zooid="zoo01">
+    <!-- Animals -->
+    <animal id="animal01" species="Mammal" zooid="zoo01">
         <name>Lion</name>
         <scientific_name>Panthera leo</scientific_name>
         <habitat>Savanna</habitat>
@@ -132,8 +135,8 @@
         <diet>Carnivore</diet>
     </animal>
 
-    
-    <animal id="animal13" species="asdsd" zooid="zoo01"><name>asdas</name><scientific_name>asdf</scientific_name><habitat>sds</habitat><diet>sdfs</diet></animal><conservation_statistic animalid="animal01" year="2023">
+    <!-- Conservation Statistics -->
+    <conservation_statistic animalid="animal01" year="2023">
         <population_in_wild>20000</population_in_wild>
         <population_in_captivity>500</population_in_captivity>
         <status>Vulnerable</status>
@@ -154,7 +157,7 @@
         <status>Vulnerable</status>
     </conservation_statistic>
 
-    
+    <!-- Messages -->
     <message type="announcement">
         <content>A giant panda cub was born at the Berlin Zoo!</content>
         <date>2023-09-15</date>
