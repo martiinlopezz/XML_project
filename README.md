@@ -4,6 +4,4 @@ Final Project for 2024/25 XML (EN) subject on Timișoara  , Owner : Martín Lóp
 
 Utility commands :
 
-$ rm -r output/*   // Borra los archivos de la carpeta output
-$ javac -d output src/*.java src/services/*.java   // Compila los archivos
-$ java -cp output main.Main   // Ejecuta el main 
+python transformations.py ( this is for xslt transformations , this creates a file in resources called output.html with the result of filtered information , this is for STEP 2 ) 
