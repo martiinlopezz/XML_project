@@ -119,17 +119,6 @@ def list_zoos():
     return zoos
 
 
-@handle_xml_exceptions("Error al contar animales en un zoológico")
-def count_animals_in_zoo(zoo_id):
-    """
-    Cuenta cuántos animales están asociados a un zoológico específico.
-    """
-    tree = ET.parse(XML_FILE_PATH)
-    root = tree.getroot()
-    animals = root.findall(f".//animal[@zooid='{zoo_id}']")
-    return len(animals)
-
-
 @handle_xml_exceptions("Error al listar zoológicos con animales")
 def list_zoos_with_animals():
     """
@@ -151,6 +140,7 @@ def list_zoos_with_animals():
             "animals": animal_list
         })
     return zoos
+
 
 @handle_xml_exceptions("Error al obtener el zoológico con más animales")
 def get_zoo_with_most_animals():
@@ -178,28 +168,6 @@ def get_zoo_with_most_animals():
 
     return best_zoo if best_zoo else {"message": "No hay zoológicos con animales"}
 
-@handle_xml_exceptions("Error al listar zoológicos con animales")
-def list_zoos_with_animals():
-    """
-    Lista todos los zoológicos junto con sus animales.
-    :return: Lista de zoológicos con animales asociados.
-    """
-    tree = ET.parse(XML_FILE_PATH)
-    root = tree.getroot()
-    zoos = []
-    for zoo in root.findall(".//zoo"):
-        zoo_id = zoo.get('id')
-        animals = root.findall(f".//animal[@zooid='{zoo_id}']")
-        animal_list = [
-            {"id": animal.get('id'), "name": animal.find('name').text}
-            for animal in animals
-        ]
-        zoos.append({
-            "id": zoo_id,
-            "name": zoo.find('name').text,
-            "animals": animal_list
-        })
-    return zoos
 
 @handle_xml_exceptions("Error al obtener información del animal")
 def get_animal_info(animal_id):
@@ -314,6 +282,18 @@ def get_animals_by_zoo(zoo_id):
             "diet": animal.find('diet')
         })
     return animals
+
+
+@handle_xml_exceptions("Error al contar animales en un zoológico")
+def count_animals_in_zoo(zoo_id):
+    """
+    Cuenta cuántos animales están asociados a un zoológico específico.
+    """
+    tree = ET.parse(XML_FILE_PATH)
+    root = tree.getroot()
+    animals = root.findall(f".//animal[@zooid='{zoo_id}']")
+    return len(animals)
+
 
 @handle_xml_exceptions("Error al buscar animales por especie")
 def get_animals_by_species(species):

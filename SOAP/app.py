@@ -1,10 +1,7 @@
 from flask import Flask, request, jsonify, Response
 from utils.xml_utils import *
-from wsdl.wsdl_generator import generate_wsdl
-
 
 app = Flask(__name__)
-app.add_url_rule("/wsdl", "generate_wsdl", generate_wsdl)
 
 
 @app.route("/", methods=["GET"])
@@ -18,25 +15,6 @@ def index():
     <p>Consulta el archivo WSDL en <a href="/wsdl">/wsdl</a>.</p>
     """
 
-@app.route("/list_routes", methods=["GET"])
-def list_routes():
-    """
-    Lista todas las rutas disponibles en la aplicación Flask.
-    """
-    routes = []
-    for rule in app.url_map.iter_rules():
-        routes.append(f"{rule.rule} -> {rule.endpoint}")
-    return "<br>".join(routes)
-
-@app.route("/wsdl", methods=["GET"])
-def generate_wsdl():
-    """
-    Genera dinámicamente el archivo WSDL basado en las operaciones definidas.
-    """
-    wsdl_content = """<?xml version="1.0" encoding="UTF-8"?>
-    <!-- Aquí estaría tu WSDL generado dinámicamente -->
-    """
-    return Response(wsdl_content, content_type="text/xml")
 
 @app.route("/get_zoo_info", methods=["POST"])
 def get_zoo_info_service():
@@ -120,12 +98,13 @@ def list_zoos_service():
 
 
 @app.route("/list_zoos_with_animals", methods=["GET"])
-def list_all_zoos_with_animals():
+def list_zoos_with_animals_service():
     """
     Endpoint para listar zoológicos con sus animales asociados.
     """
     zoos = list_zoos_with_animals()
     return jsonify({"zoos": zoos}), 200
+
 
 @app.route("/get_zoo_with_most_animals", methods=["GET"])
 def get_zoo_with_most_animals_service():
@@ -138,14 +117,6 @@ def get_zoo_with_most_animals_service():
     else:
         return jsonify(zoo), 404
 
-
-@app.route("/list_zoos_with_animals", methods=["GET"])
-def list_zoos_with_animals_service():
-    """
-    Endpoint para listar zoológicos con sus animales asociados.
-    """
-    zoos = list_zoos_with_animals()
-    return jsonify({"zoos": zoos}), 200
 
 @app.route("/get_animal", methods=["POST"])
 def get_animal_service():
@@ -247,6 +218,7 @@ def get_animals_by_zoo_service():
 
     return jsonify({"animals": get_animals_by_zoo(zoo_id)}), 200
 
+
 @app.route("/count_animals_in_zoo", methods=["POST"])
 def count_animals_in_zoo_service():
     zoo_id = request.json.get("zoo_id")
@@ -256,6 +228,7 @@ def count_animals_in_zoo_service():
 
     count = count_animals_in_zoo(zoo_id)
     return jsonify({"zoo_id": zoo_id, "animal_count": count}), 200
+
 
 @app.route("/get_animals_by_species", methods=["POST"])
 def get_animals_by_species_service():

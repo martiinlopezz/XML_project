@@ -11,7 +11,6 @@
         <xs:schema targetNamespace="http://example.com/zoo_soap">
 
             <!-- Operaciones relacionadas con zoológicos -->
-            <!-- Solicitud para obtener información de un zoológico -->
             <xs:element name="getZooInfoRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -19,20 +18,17 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para obtener información de un zoológico -->
             <xs:element name="getZooInfoResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="name" type="xs:string" minOccurs="0"/>
-                        <xs:element name="city" type="xs:string" minOccurs="0"/>
-                        <xs:element name="foundation" type="xs:string" minOccurs="0"/>
-                        <xs:element name="location" type="xs:string" minOccurs="0"/>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="city" type="xs:string"/>
+                        <xs:element name="foundation" type="xs:string"/>
+                        <xs:element name="location" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para agregar un zoológico -->
             <xs:element name="addZooRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -44,8 +40,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para agregar un zoológico -->
             <xs:element name="addZooResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -54,7 +48,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud y respuesta para eliminar un zoológico -->
             <xs:element name="deleteZooRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -70,7 +63,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para actualizar un zoológico -->
             <xs:element name="updateZooInfoRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -82,8 +74,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para actualizar un zoológico -->
             <xs:element name="updateZooInfoResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -92,12 +82,9 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para listar zoológicos -->
             <xs:element name="listZoosRequest">
                 <xs:complexType/>
             </xs:element>
-
-            <!-- Respuesta para listar zoológicos -->
             <xs:element name="listZoosResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -106,7 +93,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud y respuesta para listar zoológicos con animales -->
             <xs:element name="listZoosWithAnimalsRequest">
                 <xs:complexType/>
             </xs:element>
@@ -118,7 +104,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud y respuesta para obtener el zoológico con más animales -->
             <xs:element name="getZooWithMostAnimalsRequest">
                 <xs:complexType/>
             </xs:element>
@@ -133,29 +118,25 @@
             </xs:element>
 
             <!-- Operaciones relacionadas con animales -->
-            <!-- Solicitud para obtener información de un animal -->
-            <xs:element name="getAnimalInfoRequest">
+            <xs:element name="getAnimalRequest">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="animal_id" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para obtener información de un animal -->
-            <xs:element name="getAnimalInfoResponse">
+            <xs:element name="getAnimalResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="name" type="xs:string" minOccurs="0"/>
-                        <xs:element name="species" type="xs:string" minOccurs="0"/>
-                        <xs:element name="scientific_name" type="xs:string" minOccurs="0"/>
-                        <xs:element name="habitat" type="xs:string" minOccurs="0"/>
-                        <xs:element name="diet" type="xs:string" minOccurs="0"/>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="species" type="xs:string"/>
+                        <xs:element name="scientific_name" type="xs:string"/>
+                        <xs:element name="habitat" type="xs:string"/>
+                        <xs:element name="diet" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para agregar un animal -->
             <xs:element name="addAnimalRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -169,8 +150,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para agregar un animal -->
             <xs:element name="addAnimalResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -179,7 +158,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para eliminar un animal -->
             <xs:element name="deleteAnimalRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -187,8 +165,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para eliminar un animal -->
             <xs:element name="deleteAnimalResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -197,7 +173,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para actualizar un animal -->
             <xs:element name="updateAnimalInfoRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -210,8 +185,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para actualizar un animal -->
             <xs:element name="updateAnimalInfoResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -220,12 +193,10 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para listar animales -->
+
             <xs:element name="listAnimalsRequest">
                 <xs:complexType/>
             </xs:element>
-
-            <!-- Respuesta para listar animales -->
             <xs:element name="listAnimalsResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -234,7 +205,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud para obtener animales por zoo-->
+
             <xs:element name="getAnimalsByZooRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -242,8 +213,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!-- Respuesta para obtener animales por zoo-->
             <xs:element name="getAnimalsByZooResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -252,7 +221,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud y respuesta para contar animales en un zoológico -->
+
             <xs:element name="countAnimalsInZooRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -269,7 +238,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <!-- Solicitud y respuesta para buscar animales por especie -->
             <xs:element name="getAnimalsBySpeciesRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -284,61 +252,52 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-
         </xs:schema>
     </types>
 
     <!-- Mensajes -->
-    <!-- Mensajes para zoológicos -->
     <message name="getZooInfoRequest">
         <part name="parameters" element="tns:getZooInfoRequest"/>
     </message>
     <message name="getZooInfoResponse">
         <part name="parameters" element="tns:getZooInfoResponse"/>
     </message>
+
     <message name="addZooRequest">
         <part name="parameters" element="tns:addZooRequest"/>
     </message>
     <message name="addZooResponse">
         <part name="parameters" element="tns:addZooResponse"/>
     </message>
+
     <message name="deleteZooRequest">
         <part name="parameters" element="tns:deleteZooRequest"/>
     </message>
     <message name="deleteZooResponse">
         <part name="parameters" element="tns:deleteZooResponse"/>
     </message>
+
     <message name="updateZooInfoRequest">
         <part name="parameters" element="tns:updateZooInfoRequest"/>
     </message>
     <message name="updateZooInfoResponse">
         <part name="parameters" element="tns:updateZooInfoResponse"/>
     </message>
+
     <message name="listZoosRequest">
         <part name="parameters" element="tns:listZoosRequest"/>
     </message>
     <message name="listZoosResponse">
         <part name="parameters" element="tns:listZoosResponse"/>
     </message>
+
     <message name="listZoosWithAnimalsRequest">
         <part name="parameters" element="tns:listZoosWithAnimalsRequest"/>
     </message>
     <message name="listZoosWithAnimalsResponse">
         <part name="parameters" element="tns:listZoosWithAnimalsResponse"/>
     </message>
-    <message name="countAnimalsInZooRequest">
-        <part name="parameters" element="tns:countAnimalsInZooRequest"/>
-    </message>
-    <message name="countAnimalsInZooResponse">
-        <part name="parameters" element="tns:countAnimalsInZooResponse"/>
-    </message>
-    <message name="getZooWithMostAnimalsRequest">
-        <part name="parameters" element="tns:getZooWithMostAnimalsRequest"/>
-    </message>
-    <message name="getZooWithMostAnimalsResponse">
-        <part name="parameters" element="tns:getZooWithMostAnimalsResponse"/>
-    </message>
+
     <message name="getZooWithMostAnimalsRequest">
         <part name="parameters" element="tns:getZooWithMostAnimalsRequest"/>
     </message>
@@ -346,43 +305,55 @@
         <part name="parameters" element="tns:getZooWithMostAnimalsResponse"/>
     </message>
 
-    <!-- Mensajes para animales -->
-    <message name="getAnimalInfoRequest">
-        <part name="parameters" element="tns:getAnimalInfoRequest"/>
+    <message name="getAnimalRequest">
+        <part name="parameters" element="tns:getAnimalRequest"/>
     </message>
-    <message name="getAnimalInfoResponse">
-        <part name="parameters" element="tns:getAnimalInfoResponse"/>
+    <message name="getAnimalResponse">
+        <part name="parameters" element="tns:getAnimalResponse"/>
     </message>
+
     <message name="addAnimalRequest">
         <part name="parameters" element="tns:addAnimalRequest"/>
     </message>
     <message name="addAnimalResponse">
         <part name="parameters" element="tns:addAnimalResponse"/>
     </message>
+
     <message name="deleteAnimalRequest">
         <part name="parameters" element="tns:deleteAnimalRequest"/>
     </message>
     <message name="deleteAnimalResponse">
         <part name="parameters" element="tns:deleteAnimalResponse"/>
     </message>
+
     <message name="updateAnimalInfoRequest">
         <part name="parameters" element="tns:updateAnimalInfoRequest"/>
     </message>
     <message name="updateAnimalInfoResponse">
         <part name="parameters" element="tns:updateAnimalInfoResponse"/>
     </message>
+
     <message name="listAnimalsRequest">
         <part name="parameters" element="tns:listAnimalsRequest"/>
     </message>
     <message name="listAnimalsResponse">
         <part name="parameters" element="tns:listAnimalsResponse"/>
     </message>
+
     <message name="getAnimalsByZooRequest">
         <part name="parameters" element="tns:getAnimalsByZooRequest"/>
     </message>
     <message name="getAnimalsByZooResponse">
         <part name="parameters" element="tns:getAnimalsByZooResponse"/>
     </message>
+
+    <message name="countAnimalsInZooRequest">
+        <part name="parameters" element="tns:countAnimalsInZooRequest"/>
+    </message>
+    <message name="countAnimalsInZooResponse">
+        <part name="parameters" element="tns:countAnimalsInZooResponse"/>
+    </message>
+
     <message name="getAnimalsBySpeciesRequest">
         <part name="parameters" element="tns:getAnimalsBySpeciesRequest"/>
     </message>
@@ -392,66 +363,92 @@
 
     <!-- Puerto y operación -->
     <portType name="ZooServicePortType">
-        <!-- Operaciones para zoológicos -->
         <operation name="getZooInfo">
+            <documentation>Obtener información de un zoológico.</documentation>
             <input message="tns:getZooInfoRequest"/>
             <output message="tns:getZooInfoResponse"/>
         </operation>
+
         <operation name="addZoo">
+            <documentation>Agregar un zoológico.</documentation>
             <input message="tns:addZooRequest"/>
             <output message="tns:addZooResponse"/>
         </operation>
+
         <operation name="deleteZoo">
+            <documentation>Eliminar un zoológico.</documentation>
             <input message="tns:deleteZooRequest"/>
             <output message="tns:deleteZooResponse"/>
         </operation>
+
         <operation name="updateZooInfo">
+            <documentation>Actualizar información de un zoológico.</documentation>
             <input message="tns:updateZooInfoRequest"/>
             <output message="tns:updateZooInfoResponse"/>
         </operation>
+
         <operation name="listZoos">
+            <documentation>Listar todos los zoológicos.</documentation>
             <input message="tns:listZoosRequest"/>
             <output message="tns:listZoosResponse"/>
         </operation>
+
         <operation name="listZoosWithAnimals">
+            <documentation>Listar zoológicos junto con sus animales.</documentation>
             <input message="tns:listZoosWithAnimalsRequest"/>
             <output message="tns:listZoosWithAnimalsResponse"/>
         </operation>
+
         <operation name="getZooWithMostAnimals">
+            <documentation>Obtener el zoológico con más animales.</documentation>
             <input message="tns:getZooWithMostAnimalsRequest"/>
             <output message="tns:getZooWithMostAnimalsResponse"/>
         </operation>
 
-        <!-- Operaciones para animales -->
-        <operation name="getAnimalInfo">
-            <input message="tns:getAnimalInfoRequest"/>
-            <output message="tns:getAnimalInfoResponse"/>
+        <operation name="getAnimal">
+            <documentation>Obtener información de un animal.</documentation>
+            <input message="tns:getAnimalRequest"/>
+            <output message="tns:getAnimalResponse"/>
         </operation>
+
         <operation name="addAnimal">
+            <documentation>Agregar un animal a un zoológico.</documentation>
             <input message="tns:addAnimalRequest"/>
             <output message="tns:addAnimalResponse"/>
         </operation>
+
         <operation name="deleteAnimal">
+            <documentation>Eliminar un animal.</documentation>
             <input message="tns:deleteAnimalRequest"/>
             <output message="tns:deleteAnimalResponse"/>
         </operation>
+
         <operation name="updateAnimalInfo">
+            <documentation>Actualizar información de un animal.</documentation>
             <input message="tns:updateAnimalInfoRequest"/>
             <output message="tns:updateAnimalInfoResponse"/>
         </operation>
+
         <operation name="listAnimals">
+            <documentation>Listar todos los animales disponibles.</documentation>
             <input message="tns:listAnimalsRequest"/>
             <output message="tns:listAnimalsResponse"/>
         </operation>
+
         <operation name="getAnimalsByZoo">
+            <documentation>Obtener todos los animales asociados a un zoológico específico.</documentation>
             <input message="tns:getAnimalsByZooRequest"/>
             <output message="tns:getAnimalsByZooResponse"/>
         </operation>
+
         <operation name="countAnimalsInZoo">
+            <documentation>Contar animales en un zoológico.</documentation>
             <input message="tns:countAnimalsInZooRequest"/>
             <output message="tns:countAnimalsInZooResponse"/>
         </operation>
+
         <operation name="getAnimalsBySpecies">
+            <documentation>Obtener animales por especie.</documentation>
             <input message="tns:getAnimalsBySpeciesRequest"/>
             <output message="tns:getAnimalsBySpeciesResponse"/>
         </operation>
@@ -460,8 +457,9 @@
     <!-- Protocolo de enlace -->
     <binding name="ZooServiceBinding" type="tns:ZooServicePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
         <operation name="getZooInfo">
-            <soap:operation soapAction="http://example.com/zoo_soap#getZooInfo" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#getZooInfo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -469,8 +467,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="addZoo">
-            <soap:operation soapAction="http://example.com/zoo_soap#addZoo" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#addZoo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -478,8 +477,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
-         <operation name="deleteZoo">
-            <soap:operation soapAction="http://example.com/zoo_soap#deleteZoo" style="document"/>
+
+        <operation name="deleteZoo">
+            <soap:operation soapAction="http://example.com/zoo_soap#deleteZoo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -487,8 +487,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="updateZooInfo">
-            <soap:operation soapAction="http://example.com/zoo_soap#updateZooInfo" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#updateZooInfo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -496,8 +497,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="listZoos">
-            <soap:operation soapAction="http://example.com/zoo_soap#listZoos" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#listZoos"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -505,8 +507,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="listZoosWithAnimals">
-            <soap:operation soapAction="http://example.com/zoo_soap#listZoosWithAnimals" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#listZoosWithAnimals"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -514,8 +517,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="getZooWithMostAnimals">
-            <soap:operation soapAction="http://example.com/zoo_soap#getZooWithMostAnimals" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#getZooWithMostAnimals"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -523,8 +527,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
-        <operation name="getAnimalInfo">
-            <soap:operation soapAction="http://example.com/zoo_soap#getAnimalInfo" style="document"/>
+
+        <operation name="getAnimal">
+            <soap:operation soapAction="http://example.com/zoo_soap#getAnimal"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -532,8 +537,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="addAnimal">
-            <soap:operation soapAction="http://example.com/zoo_soap#addAnimal" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#addAnimal"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -541,8 +547,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="deleteAnimal">
-            <soap:operation soapAction="http://example.com/zoo_soap#deleteAnimal" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#deleteAnimal"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -550,8 +557,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="updateAnimalInfo">
-            <soap:operation soapAction="http://example.com/zoo_soap#updateAnimalInfo" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#updateAnimalInfo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -559,26 +567,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
-        <operation name="listAnimals">
-            <soap:operation soapAction="http://example.com/zoo_soap#listAnimals" style="document"/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-            <output>
-                <soap:body use="literal"/>
-            </output>
-        </operation>
-        <operation name="getAnimalsByZoo">
-            <soap:operation soapAction="http://example.com/zoo_soap#getAnimalsByZoo" style="document"/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-            <output>
-                <soap:body use="literal"/>
-            </output>
-        </operation>
+
         <operation name="countAnimalsInZoo">
-            <soap:operation soapAction="http://example.com/zoo_soap#countAnimalsInZoo" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#countAnimalsInZoo"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -586,8 +577,9 @@
                 <soap:body use="literal"/>
             </output>
         </operation>
+
         <operation name="getAnimalsBySpecies">
-            <soap:operation soapAction="http://example.com/zoo_soap#getAnimalsBySpecies" style="document"/>
+            <soap:operation soapAction="http://example.com/zoo_soap#getAnimalsBySpecies"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -603,5 +595,4 @@
             <soap:address location="http://localhost:8000/"/>
         </port>
     </service>
-
 </definitions>
