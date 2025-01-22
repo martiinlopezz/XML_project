@@ -39,32 +39,46 @@ def get_zoo_by_id(file_path, zoo_id):
     return None
 
 def add_zoo(file_path, data):
-    tree, root = load_xml(file_path)
-    zoos = root.findall("zoo")  # Obtener todos los nodos zoo
+    try:
+        tree, root = load_xml(file_path)
+        zoos = root.findall("zoo")  # Obtener todos los nodos zoo
 
-    # Generar un nuevo ID basado en el último nodo
-    if zoos:
-        last_zoo = zoos[-1]
-        new_id = f"zoo{int(last_zoo.get('id').replace('zoo', '')) + 1}"
-    else:
-        last_zoo = None
-        new_id = "zoo1"
+        # Validación del año de fundación
+        try:
+            foundation_year = int(data["foundation"])
+            if foundation_year < 0 or foundation_year > 2025:
+                return {"success": False, "message": "Invalid foundation year. It must be between 0 and 2025."}
+        except ValueError:
+            return {"success": False, "message": "Foundation year must be a valid number."}
 
-    # Crear el nuevo nodo zoo
-    new_zoo = ET.Element("zoo", id=new_id, location=data["location"])
-    ET.SubElement(new_zoo, "name").text = data["name"]
-    ET.SubElement(new_zoo, "city").text = data["city"]
-    ET.SubElement(new_zoo, "foundation").text = data["foundation"]
+        # Generar un nuevo ID basado en el último nodo
+        if zoos:
+            last_zoo = zoos[-1]
+            new_id = f"zoo{int(last_zoo.get('id').replace('zoo', '')) + 1}"
+        else:
+            last_zoo = None
+            new_id = "zoo1"
 
-    # Insertar el nuevo nodo en la posición correcta
-    if last_zoo is not None:
-        root.insert(list(root).index(last_zoo) + 1, new_zoo)
-    else:
-        root.append(new_zoo)
+        # Crear el nuevo nodo zoo
+        new_zoo = ET.Element("zoo", id=new_id, location=data["location"])
+        ET.SubElement(new_zoo, "name").text = data["name"]
+        ET.SubElement(new_zoo, "city").text = data["city"]
+        ET.SubElement(new_zoo, "foundation").text = data["foundation"]
 
-    # Guardar los cambios en el archivo XML
-    save_xml(tree, file_path)
-    return new_id
+        # Insertar el nuevo nodo en la posición correcta
+        if last_zoo is not None:
+            root.insert(list(root).index(last_zoo) + 1, new_zoo)
+        else:
+            root.append(new_zoo)
+
+        # Guardar los cambios en el archivo XML
+        save_xml(tree, file_path)
+        return {"success": True, "id": new_id, "message": "Zoo added successfully."}
+
+    except Exception as e:
+        print(f"Error in add_zoo: {e}")
+        return {"success": False, "message": "Failed to add zoo."}
+
 
 def update_zoo(file_path, zoo_id, data):
     tree, root = load_xml(file_path)
@@ -138,33 +152,49 @@ def get_animal_by_id(file_path, animal_id):
     return None
 
 def add_animal(file_path, data):
-    tree, root = load_xml(file_path)
-    animals = root.findall("animal")  # Obtener todos los nodos animal
+    try:
+        tree, root = load_xml(file_path)
+        animals = root.findall("animal")  # Obtener todos los nodos animal
 
-    # Generar un nuevo ID basado en el último nodo
-    if animals:
-        last_animal = animals[-1]
-        new_id = f"animal{int(last_animal.get('id').replace('animal', '')) + 1}"
-    else:
-        last_animal = None
-        new_id = "animal1"
+        # Validar si el zoo asociado al animal existe
+        zoo = root.find(f"zoo[@id='{data['zooid']}']")
+        if not zoo:
+            return {"success": False, "message": "Zoo ID does not exist. Cannot add animal."}
 
-    # Crear el nuevo nodo animal
-    new_animal = ET.Element("animal", id=new_id, species=data["species"], zooid=data["zooid"])
-    ET.SubElement(new_animal, "name").text = data["name"]
-    ET.SubElement(new_animal, "scientific_name").text = data.get("scientific_name", "Unknown")
-    ET.SubElement(new_animal, "habitat").text = data["habitat"]
-    ET.SubElement(new_animal, "diet").text = data["diet"]
+        # Validar que el nombre del animal sea único dentro del zoo
+        existing_animal = root.find(f"animal[@zooid='{data['zooid']}'][name='{data['name']}']")
+        if existing_animal:
+            return {"success": False, "message": f"Animal with the name '{data['name']}' already exists in zoo '{data['zooid']}'."}
 
-    # Insertar el nuevo nodo en la posición correcta
-    if last_animal is not None:
-        root.insert(list(root).index(last_animal) + 1, new_animal)
-    else:
-        root.append(new_animal)
+        # Generar un nuevo ID basado en el último nodo
+        if animals:
+            last_animal = animals[-1]
+            new_id = f"animal{int(last_animal.get('id').replace('animal', '')) + 1}"
+        else:
+            last_animal = None
+            new_id = "animal1"
 
-    # Guardar los cambios en el archivo XML
-    save_xml(tree, file_path)
-    return new_id
+        # Crear el nuevo nodo animal
+        new_animal = ET.Element("animal", id=new_id, species=data["species"], zooid=data["zooid"])
+        ET.SubElement(new_animal, "name").text = data["name"]
+        ET.SubElement(new_animal, "scientific_name").text = data.get("scientific_name", "Unknown")
+        ET.SubElement(new_animal, "habitat").text = data["habitat"]
+        ET.SubElement(new_animal, "diet").text = data["diet"]
+
+        # Insertar el nuevo nodo en la posición correcta
+        if last_animal is not None:
+            root.insert(list(root).index(last_animal) + 1, new_animal)
+        else:
+            root.append(new_animal)
+
+        # Guardar los cambios en el archivo XML
+        save_xml(tree, file_path)
+        return {"success": True, "id": new_id, "message": "Animal added successfully."}
+    except Exception as e:
+        print(f"Error in add_animal: {e}")
+        return {"success": False, "message": "Failed to add animal."}
+
+
 
 
 

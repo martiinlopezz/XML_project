@@ -29,7 +29,7 @@ function addZoo(event) {
     fetch(`${API_URL}/zoos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, city, foundation, location }) // No se envía el ID aquí
+        body: JSON.stringify({ name, city, foundation, location })
     })
         .then(response => {
             if (!response.ok) {
@@ -37,13 +37,14 @@ function addZoo(event) {
             }
             return response.json();
         })
-        .then(() => {
+        .then(data => {
+            alert(data.message); // Muestra mensaje de éxito
             getZoos(); // Recargar la lista
-            alert("Zoo added successfully");
             document.getElementById('add-zoo-form').reset();
         })
-        .catch(err => alert("Error: " + err.message));
+        .catch(err => alert("Error: " + err.message)); // Muestra mensaje de error
 }
+
 
 
 function deleteZoo(zooId) {
@@ -116,6 +117,7 @@ function addAnimal(event) {
         })
         .catch(err => alert("Error: " + err.message));
 }
+
 
 
 function deleteAnimal(animalId) {

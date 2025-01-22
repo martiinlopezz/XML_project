@@ -41,8 +41,14 @@ def create_zoo():
     data = request.get_json()
     if not data:
         return jsonify({"error": "Invalid or missing JSON"}), 400
-    new_id = add_zoo(XML_FILE, data)
-    return jsonify({"message": "Zoo added", "id": new_id}), 201
+
+    result = add_zoo(XML_FILE, data)
+
+    if result["success"]:
+        return jsonify({"message": result["message"], "id": result["id"]}), 201
+    else:
+        return jsonify({"error": result["message"]}), 400
+
 
 @app.route('/zoos/<zoo_id>', methods=['PUT'])
 def modify_zoo(zoo_id):
@@ -84,8 +90,14 @@ def create_animal():
     data = request.get_json()
     if not data:
         return jsonify({"error": "Invalid or missing JSON"}), 400
-    new_id = add_animal(XML_FILE, data)
-    return jsonify({"message": "Animal added", "id": new_id}), 201
+
+    result = add_animal(XML_FILE, data)
+
+    if result["success"]:
+        return jsonify({"message": result["message"], "id": result["id"]}), 201
+    else:
+        return jsonify({"error": result["message"]}), 400
+
 
 @app.route('/animals/<animal_id>', methods=['PUT'])
 def modify_animal(animal_id):
