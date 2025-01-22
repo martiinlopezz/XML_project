@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, send_file
 from utils.xml_utils import *
 
 app = Flask(__name__)
@@ -15,6 +15,12 @@ def index():
     <p>Consulta el archivo WSDL en <a href="/wsdl">/wsdl</a>.</p>
     """
 
+@app.route("/wsdl", methods=["GET"])
+def serve_wsdl():
+    """
+    Endpoint para exponer el archivo WSDL.
+    """
+    return send_file("wsdl/service.wsdl", mimetype="text/xml")
 
 @app.route("/get_zoo_info", methods=["POST"])
 def get_zoo_info_service():

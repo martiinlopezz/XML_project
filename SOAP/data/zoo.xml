@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <zoos>
-    
+
     <zoo id="zoo02" location="America">
         <name>San Diego Zoo</name>
         <city>San Diego</city>
@@ -58,18 +58,6 @@
     </zoo>
 
     
-    <animal id="animal02" species="Bird" zooid="zoo02">
-        <name>Bald Eagle</name>
-        <scientific_name>Haliaeetus leucocephalus</scientific_name>
-        <habitat>Forests and rivers</habitat>
-        <diet>Carnivore</diet>
-    </animal>
-    <animal id="animal03" species="Reptile" zooid="zoo03">
-        <name>Komodo Dragon</name>
-        <scientific_name>Varanus komodoensis</scientific_name>
-        <habitat>Tropical islands</habitat>
-        <diet>Carnivore</diet>
-    </animal>
     <animal id="animal04" species="Mammal" zooid="zoo04">
         <name>African Elephant</name>
         <scientific_name>Loxodonta africana</scientific_name>
