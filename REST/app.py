@@ -167,6 +167,20 @@ def list_stats():
     print("GET /conservation_stats Response:", response.json)
     return response
 
+@app.route('/conservation_stats/<animal_id>', methods=['GET'])
+def get_stat_by_animal(animal_id):
+    stats = get_all_conservation_stats(XML_FILE)  # Obtiene todas las estadísticas
+    filtered_stats = [stat for stat in stats if stat["animalid"] == animal_id]  # Filtra por animal_id
+    
+    if filtered_stats:
+        response = jsonify(filtered_stats)
+        print(f"GET /conservation_stats/{animal_id} Response:", response.json)
+        return response
+    response = jsonify({"error": "No statistics found for the given animal ID"})
+    print(f"GET /conservation_stats/{animal_id} Response:", response.json)
+    return response, 404
+
+
 @app.route('/conservation_stats', methods=['POST'])
 def create_stat():
     data = request.get_json()

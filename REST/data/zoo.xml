@@ -76,12 +76,6 @@
         <habitat>Savanna and forests</habitat>
         <diet>Herbivore</diet>
     </animal>
-    <animal id="animal06" species="Mammal" zooid="zoo06">
-        <name>Giraffe</name>
-        <scientific_name>Giraffa camelopardalis</scientific_name>
-        <habitat>Savanna</habitat>
-        <diet>Herbivore</diet>
-    </animal>
     <animal id="animal07" species="Amphibian" zooid="zoo07">
         <name>Strawberry Poison Frog</name>
         <scientific_name>Oophaga pumilio</scientific_name>
@@ -120,7 +114,7 @@
     </animal>
 
     
-    <animal id="animal13" species="Mammal" zooid="zoo12"><name>Lion</name><scientific_name>addad</scientific_name><habitat>Savanna</habitat><diet>dasd</diet></animal><conservation_statistic animalid="animal01" year="2023">
+    <animal id="animal13" species="Mammal" zooid="zoo12"><name>Lion</name><scientific_name>addad</scientific_name><habitat>Savanna</habitat><diet>dasd</diet></animal><animal id="animal14" species="Elephas maximus" zooid="zoo04"><name>Elephant</name><scientific_name>Elephas maximus</scientific_name><habitat>Savannah</habitat><diet>Herbivore</diet></animal><conservation_statistic animalid="animal01" year="2023">
         <population_in_wild>20000</population_in_wild>
         <population_in_captivity>500</population_in_captivity>
         <status>Vulnerable</status>
