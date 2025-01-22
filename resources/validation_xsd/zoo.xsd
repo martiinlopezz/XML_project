@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- Elemento raíz -->
+    <xs:element name="zoos">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="zoo" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string" />
+                            <xs:element name="city" type="xs:string" />
+                            <xs:element name="foundation" type="xs:integer" />
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:ID" use="required" />
+                        <xs:attribute name="location" type="xs:string" use="required" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="animal" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string" />
+                            <xs:element name="scientific_name" type="xs:string" />
+                            <xs:element name="habitat" type="xs:string" />
+                            <xs:element name="diet" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:ID" use="required" />
+                        <xs:attribute name="species" type="xs:string" use="required" />
+                        <xs:attribute name="zooid" type="xs:IDREF" use="required" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="conservation_statistic" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="population_in_wild" type="xs:integer" />
+                            <xs:element name="population_in_captivity" type="xs:integer" />
+                            <xs:element name="status" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="animalid" type="xs:IDREF" use="required" />
+                        <xs:attribute name="year" type="xs:integer" use="required" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="message" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="content" type="xs:string" />
+                            <xs:element name="date" type="xs:date" />
+                        </xs:sequence>
+                        <xs:attribute name="type" type="xs:string" use="required" />
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
