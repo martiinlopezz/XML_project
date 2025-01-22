@@ -1,0 +1,174 @@
+from flask import Flask, request, jsonify
+from utils.xml_utils import *
+
+app = Flask(__name__)
+
+@app.route("/get_zoo_info", methods=["POST"])
+def get_zoo_info_service():
+    """
+    Endpoint para obtener información sobre un zoológico a partir de su ID.
+    """
+    try:
+        zoo_id = request.json.get("zoo_id")
+        if not zoo_id:
+            return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
+
+        response = get_zoo_info(zoo_id)
+        if response:
+            return jsonify({"zoo_info": response})
+        else:
+            return jsonify({"error": f"No se encontró un zoológico con el ID: {zoo_id}"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+
+
+@app.route("/add_zoo", methods=["POST"])
+def add_zoo_service():
+    """
+    Endpoint para agregar un nuevo zoológico al archivo XML.
+    """
+    try:
+        data = request.json
+        zoo_id = data.get("zoo_id")
+        name = data.get("name")
+        city = data.get("city")
+        foundation = data.get("foundation")
+        location = data.get("location")
+
+        # Validación básica
+        if not (zoo_id and name and city and foundation and location):
+            return jsonify({"error": "Todos los campos son obligatorios"}), 400
+
+        success = add_zoo(zoo_id, name, city, foundation, location)
+        if success:
+            return jsonify({"message": "Zoológico agregado exitosamente"}), 201
+        else:
+            return jsonify({"error": "No se pudo agregar el zoológico"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+
+
+@app.route("/update_zoo_info", methods=["POST"])
+def update_zoo_info_service():
+    data = request.json
+    zoo_id = data.get("zoo_id")
+    name = data.get("name")
+    city = data.get("city")
+    foundation = data.get("foundation")
+    location = data.get("location")
+
+    if not zoo_id:
+        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
+
+    if update_zoo_info(zoo_id, name, city, foundation, location):
+        return jsonify({"message": "Información del zoológico actualizada exitosamente"}), 200
+    else:
+        return jsonify({"error": f"No se encontró un zoológico con ID: {zoo_id}"}), 404
+
+
+@app.route("/list_zoos", methods=["GET"])
+def list_zoos_service():
+    return jsonify({"zoos": list_zoos()}), 200
+
+
+@app.route("/get_animal", methods=["POST"])
+def get_animal_service():
+    """
+    Endpoint para obtener información sobre un animal a partir de su ID.
+    """
+    try:
+        animal_id = request.json.get("animal_id")
+        if not animal_id:
+            return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
+
+        response = get_animal_info(animal_id)
+        if response:
+            return jsonify({"animal_info": response})
+        else:
+            return jsonify({"error": f"No se encontró un animal con el ID: {animal_id}"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+
+
+@app.route("/add_animal", methods=["POST"])
+def add_animal_service():
+    """
+    Endpoint para agregar un nuevo animal al archivo XML.
+    """
+    try:
+        data = request.json
+        animal_id = data.get("animal_id")
+        zoo_id = data.get("zoo_id")
+        name = data.get("name")
+        species = data.get("species")
+        scientific_name = data.get("scientific_name")
+        habitat = data.get("habitat")
+        diet = data.get("diet")
+
+        # Validación básica
+        if not (animal_id and zoo_id and name and species and scientific_name and habitat and diet):
+            return jsonify({"error": "Todos los campos son obligatorios"}), 400
+
+        # Llamada a la función para agregar al XML
+        success = add_animal(animal_id, zoo_id, name, species, scientific_name, habitat, diet)
+        if success:
+            return jsonify({"message": "Animal agregado exitosamente"}), 201
+        else:
+            return jsonify({"error": "No se pudo agregar el animal"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+
+
+@app.route("/delete_animal", methods=["POST"])
+def delete_animal_service():
+    """
+    Endpoint para eliminar un animal del archivo XML.
+    """
+    try:
+        animal_id = request.json.get("animal_id")
+        if not animal_id:
+            return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
+
+        success = delete_animal(animal_id)
+        if success:
+            return jsonify({"message": "Animal eliminado exitosamente"}), 200
+        else:
+            return jsonify({"error": f"No se encontró un animal con el ID: {animal_id}"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+
+
+@app.route("/update_animal_info", methods=["POST"])
+def update_animal_info_service():
+    data = request.json
+    animal_id = data.get("animal_id")
+    name = data.get("name")
+    species = data.get("species")
+    scientific_name = data.get("scientific_name")
+    habitat = data.get("habitat")
+    diet = data.get("diet")
+
+    if not animal_id:
+        return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
+
+    if update_animal_info(animal_id, name, species, scientific_name, habitat, diet):
+        return jsonify({"message": "Información del animal actualizada exitosamente"}), 200
+    else:
+        return jsonify({"error": f"No se encontró un animal con ID: {animal_id}"}), 404
+
+@app.route("/list_animals", methods=["GET"])
+def list_animals_service():
+    return jsonify({"animals": list_animals()}), 200
+
+@app.route("/get_animals_by_zoo", methods=["POST"])
+def get_animals_by_zoo_service():
+    zoo_id = request.json.get("zoo_id")
+
+    if not zoo_id:
+        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
+
+    return jsonify({"animals": get_animals_by_zoo(zoo_id)}), 200
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8000)
