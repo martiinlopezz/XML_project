@@ -13,3 +13,5 @@ python REST/app.py (to access the interface that displays the API operations )
 To access Orbeon's Xforms, you must copy the xforms-zoos folder into the Orbeon directory and access the url http://localhost:8080/orbeon/xforms-zoos/ after starting the Tomcat server
 
 For Xquery you must run your existdb application and depending on the url you have configured your XML you must change the code. In my case : EXISTDB_URL = "http://localhost:8080/exist/rest/db/zoo"  . Firstly you must load the xml file in the esxitdb interface
+
+To use the API with orbeon you must launch the api doing python api.py and launch orbeon ( previously you must copy the folder to your orbeon launchspace ) 
