@@ -9,6 +9,7 @@
                 <queryData xmlns="">
                     <zooName/>
                     <animalType/>
+                    <habitat/> <!-- Nuevo campo para el hábitat -->
                 </queryData>
             </xf:instance>
 
@@ -51,10 +52,25 @@
                 </xf:item>
             </xf:select1>
 
-            <!-- Submit button -->
+            <!-- Input for habitat -->
+            <xf:input ref="habitat">
+                <xf:label>Habitat:</xf:label>
+            </xf:input>
+
+            <!-- Submit button for search -->
             <xf:submit submission="api-submission">
                 <xf:label>Search</xf:label>
             </xf:submit>
+
+            <!-- Button to list all animals -->
+            <xf:trigger>
+                <xf:label>List All Animals</xf:label>
+                <xf:send submission="api-submission">
+                    <xf:setvalue ref="zooName" value=""/>
+                    <xf:setvalue ref="animalType" value=""/>
+                    <xf:setvalue ref="habitat" value=""/>
+                </xf:send>
+            </xf:trigger>
         </xf:group>
 
         <!-- Display response data -->
@@ -67,6 +83,9 @@
                     </xh:p>
                     <xh:p>
                         <strong>Species:</strong> <xf:output value="species"/>
+                    </xh:p>
+                    <xh:p>
+                        <strong>Habitat:</strong> <xf:output value="habitat"/> <!-- Mostrar el hábitat -->
                     </xh:p>
                 </xh:div>
             </xf:repeat>
