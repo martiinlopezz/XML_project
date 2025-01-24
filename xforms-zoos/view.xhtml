@@ -9,7 +9,7 @@
                 <queryData xmlns="">
                     <zooName/>
                     <animalType/>
-                    <habitat/> <!-- Nuevo campo para el hábitat -->
+                    <habitat/>
                 </queryData>
             </xf:instance>
 
@@ -25,60 +25,125 @@
                            replace="instance"
                            instance="response-instance"/>
         </xf:model>
+
+        <!-- CSS embebido -->
+        <xh:style type="text/css">
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f4f4f9;
+                color: #333;
+            }
+            h1 {
+                text-align: center;
+                color: #4CAF50;
+            }
+            .form-container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+            label {
+                font-weight: bold;
+                margin-bottom: 8px;
+                display: block;
+            }
+            input, select, button {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            .results {
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #fff;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+            .results h2 {
+                margin-top: 0;
+                color: #333;
+            }
+            .results p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+        </xh:style>
     </xh:head>
     <xh:body>
-        <xf:group>
-            <xh:h1>Zoo API Form</xh:h1>
+        <div class="form-container">
+            <xf:group>
+                <xh:h1>Zoo API Form</xh:h1>
 
-            <!-- Input for zoo name -->
-            <xf:input ref="zooName">
-                <xf:label>Zoo Name:</xf:label>
-            </xf:input>
+                <!-- Input for zoo name -->
+                <xf:input ref="zooName">
+                    <xf:label>Zoo Name:</xf:label>
+                </xf:input>
 
-            <!-- Input for animal type -->
-            <xf:select1 ref="animalType">
-                <xf:label>Animal Type:</xf:label>
-                <xf:item>
-                    <xf:label>Mammal</xf:label>
-                    <xf:value>Mammal</xf:value>
-                </xf:item>
-                <xf:item>
-                    <xf:label>Bird</xf:label>
-                    <xf:value>Bird</xf:value>
-                </xf:item>
-                <xf:item>
-                    <xf:label>Reptile</xf:label>
-                    <xf:value>Reptile</xf:value>
-                </xf:item>
-            </xf:select1>
+                <!-- Input for animal type -->
+                <xf:select1 ref="animalType">
+                    <xf:label>Animal Type:</xf:label>
+                    <xf:item>
+                        <xf:label>Mammal</xf:label>
+                        <xf:value>Mammal</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Bird</xf:label>
+                        <xf:value>Bird</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Reptile</xf:label>
+                        <xf:value>Reptile</xf:value>
+                    </xf:item>
+                </xf:select1>
 
-            <!-- Input for habitat -->
-            <xf:input ref="habitat">
-                <xf:label>Habitat:</xf:label>
-            </xf:input>
+                <!-- Input for habitat -->
+                <xf:input ref="habitat">
+                    <xf:label>Habitat:</xf:label>
+                </xf:input>
 
-            <!-- Submit button for search -->
-            <xf:submit submission="api-submission">
-                <xf:label>Search</xf:label>
-            </xf:submit>
-        </xf:group>
+                <!-- Submit button for search -->
+                <xf:submit submission="api-submission">
+                    <xf:label>Search</xf:label>
+                </xf:submit>
+            </xf:group>
+        </div>
 
         <!-- Display response data -->
-        <xf:group ref="instance('response-instance')/animals">
-            <xh:h2>Results</xh:h2>
-            <xf:repeat ref="animal">
-                <xh:div>
-                    <xh:p>
-                        <strong>Name:</strong> <xf:output value="name"/>
-                    </xh:p>
-                    <xh:p>
-                        <strong>Species:</strong> <xf:output value="species"/>
-                    </xh:p>
-                    <xh:p>
-                        <strong>Habitat:</strong> <xf:output value="habitat"/> <!-- Mostrar el hábitat -->
-                    </xh:p>
-                </xh:div>
-            </xf:repeat>
-        </xf:group>
+        <div class="results">
+            <xf:group ref="instance('response-instance')/animals">
+                <xh:h2>Results</xh:h2>
+                <xf:repeat ref="animal">
+                    <xh:div>
+                        <xh:p>
+                            <strong>Name:</strong> <xf:output value="name"/>
+                        </xh:p>
+                        <xh:p>
+                            <strong>Species:</strong> <xf:output value="species"/>
+                        </xh:p>
+                        <xh:p>
+                            <strong>Habitat:</strong> <xf:output value="habitat"/>
+                        </xh:p>
+                    </xh:div>
+                </xf:repeat>
+            </xf:group>
+        </div>
     </xh:body>
 </xh:html>
