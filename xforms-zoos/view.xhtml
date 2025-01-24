@@ -28,62 +28,116 @@
 
         <!-- CSS embebido -->
         <xh:style type="text/css">
+            /* General body styles */
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'Roboto', Arial, sans-serif;
                 margin: 0;
                 padding: 20px;
-                background-color: #f4f4f9;
+                background: linear-gradient(to right, #f8f9fa, #e9ecef);
                 color: #333;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
             }
+
+            /* Form container */
+            .form-container {
+                max-width: 700px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 25px;
+                background-color: #ffffff;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                border: 1px solid #dee2e6;
+            }
+
             h1 {
                 text-align: center;
-                color: #4CAF50;
+                color: #007bff;
+                font-size: 28px;
+                margin-bottom: 20px;
             }
-            .form-container {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #fff;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
+
             label {
                 font-weight: bold;
                 margin-bottom: 8px;
                 display: block;
+                font-size: 14px;
+                color: #495057;
             }
+
             input, select, button {
                 width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                border: 1px solid #ddd;
-                border-radius: 4px;
+                padding: 12px;
+                margin: 12px 0;
+                border: 1px solid #ced4da;
+                border-radius: 8px;
                 font-size: 16px;
+                transition: 0.3s;
             }
+
+            input:focus, select:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+            }
+
             button {
-                background-color: #4CAF50;
+                background-color: #007bff;
                 color: white;
                 border: none;
+                font-weight: bold;
                 cursor: pointer;
-                transition: background-color 0.3s;
+                transition: background-color 0.3s, box-shadow 0.3s;
             }
+
             button:hover {
-                background-color: #45a049;
+                background-color: #0056b3;
+                box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
             }
+
+            /* Results section */
             .results {
-                margin-top: 20px;
-                padding: 15px;
-                background-color: #fff;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
+                margin-top: 30px;
+                padding: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                border: 1px solid #dee2e6;
             }
+
             .results h2 {
-                margin-top: 0;
-                color: #333;
+                font-size: 24px;
+                color: #007bff;
+                margin-bottom: 20px;
+                text-align: center;
             }
-            .results p {
+
+            .animal {
+                margin-bottom: 20px;
+                padding: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                background-color: #f8f9fa;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            .animal:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .animal strong {
+                font-weight: bold;
+                color: #495057;
+            }
+
+            .animal p {
                 margin: 5px 0;
-                font-size: 14px;
+                line-height: 1.6;
+                color: #212529;
             }
         </xh:style>
     </xh:head>
@@ -131,7 +185,7 @@
             <xf:group ref="instance('response-instance')/animals">
                 <xh:h2>Results</xh:h2>
                 <xf:repeat ref="animal">
-                    <xh:div>
+                    <div class="animal">
                         <xh:p>
                             <strong>Name:</strong> <xf:output value="name"/>
                         </xh:p>
@@ -141,7 +195,7 @@
                         <xh:p>
                             <strong>Habitat:</strong> <xf:output value="habitat"/>
                         </xh:p>
-                    </xh:div>
+                    </div>
                 </xf:repeat>
             </xf:group>
         </div>
