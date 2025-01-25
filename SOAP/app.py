@@ -1,257 +1,232 @@
-from flask import Flask, request, jsonify, Response, send_file
-from utils.xml_utils import *
+from flask import Flask, request, Response
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 
 app = Flask(__name__)
 
-
-@app.route("/", methods=["GET"])
-def index():
-    """
-    Endpoint raíz de la aplicación.
-    Redirige al WSDL o muestra una página de inicio.
-    """
-    return """
-    <h1>Bienvenido al Servicio SOAP de Zoológicos</h1>
-    <p>Consulta el archivo WSDL en <a href="/wsdl">/wsdl</a>.</p>
-    """
-
-@app.route("/wsdl", methods=["GET"])
-def serve_wsdl():
-    """
-    Endpoint para exponer el archivo WSDL.
-    """
-    return send_file("wsdl/service.wsdl", mimetype="text/xml")
-
-@app.route("/get_zoo_info", methods=["POST"])
-def get_zoo_info_service():
-    """
-    Endpoint para obtener información sobre un zoológico a partir de su ID.
-    """
-    try:
-        zoo_id = request.json.get("zoo_id")
-        if not zoo_id:
-            return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
-
-        response = get_zoo_info(zoo_id)
-        if response:
-            return jsonify({"zoo_info": response})
-        else:
-            return jsonify({"error": f"No se encontró un zoológico con el ID: {zoo_id}"}), 404
-    except Exception as e:
-        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+# Load the XML database
+DATABASE_FILE = 'data/zoo.xml'
 
 
-@app.route("/add_zoo", methods=["POST"])
-def add_zoo_service():
-    """
-    Endpoint para agregar un nuevo zoológico al archivo XML.
-    """
-    try:
-        data = request.json
-        zoo_id = data.get("zoo_id")
-        name = data.get("name")
-        city = data.get("city")
-        foundation = data.get("foundation")
-        location = data.get("location")
-
-        # Validación básica
-        if not (zoo_id and name and city and foundation and location):
-            return jsonify({"error": "Todos los campos son obligatorios"}), 400
-
-        success = add_zoo(zoo_id, name, city, foundation, location)
-        if success:
-            return jsonify({"message": "Zoológico agregado exitosamente"}), 201
-        else:
-            return jsonify({"error": "No se pudo agregar el zoológico"}), 500
-    except Exception as e:
-        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+def load_database():
+    tree = ET.parse(DATABASE_FILE)
+    return tree
 
 
-@app.route("/delete_zoo", methods=["POST"])
-def delete_zoo_service():
-    zoo_id = request.json.get("zoo_id")
-
-    if not zoo_id:
-        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
-
-    if delete_zoo(zoo_id):
-        return jsonify({"message": "Zoológico eliminado exitosamente"}), 200
+def indent(elem, level=0):
+    """Helper function to format XML with indentation."""
+    i = "\n" + "  " * level
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        for child in elem:
+            indent(child, level + 1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
     else:
-        return jsonify({"error": f"No se encontró un zoológico con ID: {zoo_id}"}), 404
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+    return elem
 
 
-@app.route("/update_zoo_info", methods=["POST"])
-def update_zoo_info_service():
-    data = request.json
-    zoo_id = data.get("zoo_id")
-    name = data.get("name")
-    city = data.get("city")
-    foundation = data.get("foundation")
-    location = data.get("location")
+def save_database(tree):
+    """Guardar la base de datos con una indentación correcta y sin saltos de línea extra."""
+    root = tree.getroot()
+    raw_xml = ET.tostring(root, encoding='unicode')  # Convierte el XML a string
+    parsed_xml = minidom.parseString(raw_xml)  # Parsea el XML para formatearlo
+    pretty_xml = parsed_xml.toprettyxml(indent="    ")  # Aplica indentación de 4 espacios
 
-    if not zoo_id:
-        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
+    # Elimina líneas vacías causadas por toprettyxml
+    fixed_xml = "\n".join([line for line in pretty_xml.splitlines() if line.strip()])
 
-    if update_zoo_info(zoo_id, name, city, foundation, location):
-        return jsonify({"message": "Información del zoológico actualizada exitosamente"}), 200
-    else:
-        return jsonify({"error": f"No se encontró un zoológico con ID: {zoo_id}"}), 404
+    # Escribe el XML formateado en el archivo
+    with open(DATABASE_FILE, 'w', encoding='utf-8') as file:
+        file.write(fixed_xml)
 
-
-@app.route("/list_zoos", methods=["GET"])
-def list_zoos_service():
-    return jsonify({"zoos": list_zoos()}), 200
+@app.route('/wsdl', methods=['GET'])
+def get_wsdl():
+    with open('wsdl/service.wsdl', 'r') as wsdl_file:
+        wsdl_content = wsdl_file.read()
+    return Response(wsdl_content, mimetype='text/xml')
 
 
-@app.route("/list_zoos_with_animals", methods=["GET"])
-def list_zoos_with_animals_service():
-    """
-    Endpoint para listar zoológicos con sus animales asociados.
-    """
-    zoos = list_zoos_with_animals()
-    return jsonify({"zoos": zoos}), 200
-
-
-@app.route("/get_zoo_with_most_animals", methods=["GET"])
-def get_zoo_with_most_animals_service():
-    """
-    Endpoint para obtener el zoológico con más animales.
-    """
-    zoo = get_zoo_with_most_animals()
-    if "zoo_id" in zoo:
-        return jsonify(zoo), 200
-    else:
-        return jsonify(zoo), 404
-
-
-@app.route("/get_animal", methods=["POST"])
-def get_animal_service():
-    """
-    Endpoint para obtener información sobre un animal a partir de su ID.
-    """
+@app.route('/soap', methods=['POST'])
+def soap_api():
     try:
-        animal_id = request.json.get("animal_id")
-        if not animal_id:
-            return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
-
-        response = get_animal_info(animal_id)
-        if response:
-            return jsonify({"animal_info": response})
-        else:
-            return jsonify({"error": f"No se encontró un animal con el ID: {animal_id}"}), 404
+        # Parse the incoming SOAP request
+        xml_tree = ET.fromstring(request.data)
+        body = xml_tree.find("{http://schemas.xmlsoap.org/soap/envelope/}Body")
+        operation = body[0].tag.split("}")[1]  # Get the operation name (e.g., "AddZooRequest")
     except Exception as e:
-        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
+        return Response(f"Error parsing SOAP request: {str(e)}", status=400)
 
+    # Load the XML database
+    tree = load_database()
+    root = tree.getroot()
+    response = ""
 
-@app.route("/add_animal", methods=["POST"])
-def add_animal_service():
-    """
-    Endpoint para agregar un nuevo animal al archivo XML.
-    """
-    try:
-        data = request.json
-        animal_id = data.get("animal_id")
-        zoo_id = data.get("zoo_id")
-        name = data.get("name")
-        species = data.get("species")
-        scientific_name = data.get("scientific_name")
-        habitat = data.get("habitat")
-        diet = data.get("diet")
+    # Route the operation for animals
+    if operation == "AddAnimalRequest":
+        response = add_animal(root, body[0])
+    elif operation == "DeleteAnimalRequest":
+        response = delete_animal(root, body[0])
+    elif operation == "UpdateAnimalRequest":
+        response = update_animal(root, body[0])
+    elif operation == "GetAnimalByIdRequest":
+        response = get_animal_by_id(root, body[0])
+    elif operation == "ListAllAnimalsRequest":
+        response = list_all_animals(root)
 
-        # Validación básica
-        if not (animal_id and zoo_id and name and species and scientific_name and habitat and diet):
-            return jsonify({"error": "Todos los campos son obligatorios"}), 400
-
-        # Llamada a la función para agregar al XML
-        success = add_animal(animal_id, zoo_id, name, species, scientific_name, habitat, diet)
-        if success:
-            return jsonify({"message": "Animal agregado exitosamente"}), 201
-        else:
-            return jsonify({"error": "No se pudo agregar el animal"}), 500
-    except Exception as e:
-        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
-
-
-@app.route("/delete_animal", methods=["POST"])
-def delete_animal_service():
-    """
-    Endpoint para eliminar un animal del archivo XML.
-    """
-    try:
-        animal_id = request.json.get("animal_id")
-        if not animal_id:
-            return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
-
-        success = delete_animal(animal_id)
-        if success:
-            return jsonify({"message": "Animal eliminado exitosamente"}), 200
-        else:
-            return jsonify({"error": f"No se encontró un animal con el ID: {animal_id}"}), 404
-    except Exception as e:
-        return jsonify({"error": f"Error al procesar la solicitud: {str(e)}"}), 500
-
-
-@app.route("/update_animal_info", methods=["POST"])
-def update_animal_info_service():
-    data = request.json
-    animal_id = data.get("animal_id")
-    name = data.get("name")
-    species = data.get("species")
-    scientific_name = data.get("scientific_name")
-    habitat = data.get("habitat")
-    diet = data.get("diet")
-
-    if not animal_id:
-        return jsonify({"error": "El parámetro 'animal_id' es obligatorio"}), 400
-
-    if update_animal_info(animal_id, name, species, scientific_name, habitat, diet):
-        return jsonify({"message": "Información del animal actualizada exitosamente"}), 200
+    # Route the operation for zoos (existing functionality)
+    elif operation == "AddZooRequest":
+        response = add_zoo(root, body[0])
+    elif operation == "DeleteZooRequest":
+        response = delete_zoo(root, body[0])
+    elif operation == "UpdateZooRequest":
+        response = update_zoo(root, body[0])
+    elif operation == "GetZooByIdRequest":
+        response = get_zoo_by_id(root, body[0])
+    elif operation == "ListAllZoosRequest":
+        response = list_all_zoos(root)
     else:
-        return jsonify({"error": f"No se encontró un animal con ID: {animal_id}"}), 404
+        return Response("<response>Unsupported operation</response>", status=400)
+
+    # Save the database if changes were made
+    save_database(tree)
+
+    # Return the SOAP response
+    return Response(response, mimetype="text/xml")
 
 
-@app.route("/list_animals", methods=["GET"])
-def list_animals_service():
-    return jsonify({"animals": list_animals()}), 200
+# Helper functions for operations
+def add_zoo(root, data):
+    # Check for duplicates
+    zoo_id = data.find("id").text
+    if root.find(f".//zoo[@id='{zoo_id}']") is not None:
+        return f"<response>Zoo with ID {zoo_id} already exists</response>"
 
+    # Extract zoo data from the XML request
+    new_zoo = ET.Element('zoo', id=zoo_id, location=data.find("location").text)
+    ET.SubElement(new_zoo, 'name').text = data.find("name").text
+    ET.SubElement(new_zoo, 'city').text = data.find("city").text
+    ET.SubElement(new_zoo, 'foundation').text = data.find("foundation").text
 
-@app.route("/get_animals_by_zoo", methods=["POST"])
-def get_animals_by_zoo_service():
-    zoo_id = request.json.get("zoo_id")
-
-    if not zoo_id:
-        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
-
-    return jsonify({"animals": get_animals_by_zoo(zoo_id)}), 200
-
-
-@app.route("/count_animals_in_zoo", methods=["POST"])
-def count_animals_in_zoo_service():
-    zoo_id = request.json.get("zoo_id")
-
-    if not zoo_id:
-        return jsonify({"error": "El parámetro 'zoo_id' es obligatorio"}), 400
-
-    count = count_animals_in_zoo(zoo_id)
-    return jsonify({"zoo_id": zoo_id, "animal_count": count}), 200
-
-
-@app.route("/get_animals_by_species", methods=["POST"])
-def get_animals_by_species_service():
-    """
-    Endpoint para obtener animales filtrados por especie.
-    """
-    species = request.json.get("species")
-
-    if not species:
-        return jsonify({"error": "El parámetro 'species' es obligatorio"}), 400
-
-    animals = get_animals_by_species(species)
-    if animals:
-        return jsonify({"species": species, "animals": animals}), 200
+    # Find where to insert the new zoo (before the first <animal>)
+    first_animal = root.find(".//animal")
+    if first_animal is not None:
+        root.insert(list(root).index(first_animal), new_zoo)
     else:
-        return jsonify({"message": f"No se encontraron animales de la especie: {species}"}), 404
+        root.append(new_zoo)  # If no animals, append at the end
+
+    return f"<response>Zoo with ID {zoo_id} added successfully</response>"
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+
+def delete_zoo(root, data):
+    zoo_id = data.find("id").text
+    zoo_to_remove = root.find(f".//zoo[@id='{zoo_id}']")
+
+    if zoo_to_remove is not None:
+        root.remove(zoo_to_remove)
+        return f"<response>Zoo with ID {zoo_id} removed successfully</response>"
+    else:
+        return f"<response>Zoo with ID {zoo_id} not found</response>"
+
+
+def update_zoo(root, data):
+    zoo_id = data.find("id").text
+    zoo_to_update = root.find(f".//zoo[@id='{zoo_id}']")
+
+    if zoo_to_update is not None:
+        zoo_to_update.set('location', data.find("location").text)
+        zoo_to_update.find('name').text = data.find("name").text
+        zoo_to_update.find('city').text = data.find("city").text
+        zoo_to_update.find('foundation').text = data.find("foundation").text
+
+        return f"<response>Zoo with ID {zoo_id} updated successfully</response>"
+    else:
+        return f"<response>Zoo with ID {zoo_id} not found</response>"
+
+
+def get_zoo_by_id(root, data):
+    zoo_id = data.find("id").text
+    zoo = root.find(f".//zoo[@id='{zoo_id}']")
+
+    if zoo is not None:
+        return ET.tostring(zoo, encoding='unicode')
+    else:
+        return f"<response>Zoo with ID {zoo_id} not found</response>"
+
+
+def list_all_zoos(root):
+    zoos = root.findall(".//zoo")
+    response = "<zoos>" + "".join([ET.tostring(zoo, encoding='unicode') for zoo in zoos]) + "</zoos>"
+    return response
+
+def add_animal(root, data):
+    # Check for duplicates
+    animal_id = data.find("id").text
+    if root.find(f".//animal[@id='{animal_id}']") is not None:
+        return f"<response>Animal with ID {animal_id} already exists</response>"
+
+    # Extract animal data from the XML request
+    new_animal = ET.Element('animal', id=animal_id, species=data.find("species").text, zooid=data.find("zooid").text)
+    ET.SubElement(new_animal, 'name').text = data.find("name").text
+    ET.SubElement(new_animal, 'scientific_name').text = data.find("scientific_name").text
+    ET.SubElement(new_animal, 'habitat').text = data.find("habitat").text
+    ET.SubElement(new_animal, 'diet').text = data.find("diet").text
+
+    # Find the position to insert the new animal (after the last <animal>)
+    last_animal = root.findall(".//animal")[-1] if root.findall(".//animal") else None
+    if last_animal is not None:
+        parent = last_animal.getparent() if hasattr(last_animal, 'getparent') else root
+        parent.insert(list(root).index(last_animal) + 1, new_animal)
+    else:
+        root.append(new_animal)  # If no animals exist, append at the end
+
+    return f"<response>Animal with ID {animal_id} added successfully</response>"
+
+def delete_animal(root, data):
+    animal_id = data.find("id").text
+    animal_to_remove = root.find(f".//animal[@id='{animal_id}']")
+
+    if animal_to_remove is not None:
+        root.remove(animal_to_remove)
+        return f"<response>Animal with ID {animal_id} removed successfully</response>"
+    else:
+        return f"<response>Animal with ID {animal_id} not found</response>"
+
+def update_animal(root, data):
+    animal_id = data.find("id").text
+    animal_to_update = root.find(f".//animal[@id='{animal_id}']")
+
+    if animal_to_update is not None:
+        animal_to_update.set('species', data.find("species").text)
+        animal_to_update.set('zooid', data.find("zooid").text)
+        animal_to_update.find('name').text = data.find("name").text
+        animal_to_update.find('scientific_name').text = data.find("scientific_name").text
+        animal_to_update.find('habitat').text = data.find("habitat").text
+        animal_to_update.find('diet').text = data.find("diet").text
+
+        return f"<response>Animal with ID {animal_id} updated successfully</response>"
+    else:
+        return f"<response>Animal with ID {animal_id} not found</response>"
+
+def get_animal_by_id(root, data):
+    animal_id = data.find("id").text
+    animal = root.find(f".//animal[@id='{animal_id}']")
+
+    if animal is not None:
+        return ET.tostring(animal, encoding='unicode')
+    else:
+        return f"<response>Animal with ID {animal_id} not found</response>"
+
+def list_all_animals(root):
+    animals = root.findall(".//animal")
+    response = "<animals>" + "".join([ET.tostring(animal, encoding='unicode') for animal in animals]) + "</animals>"
+    return response
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
