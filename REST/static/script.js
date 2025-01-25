@@ -143,32 +143,44 @@ function deleteAnimal(animalId) {
 
 // Fetch Conservation Statistics
 function getConservationStats() {
-    fetch(`${API_URL}/conservation-stats`)
-        .then(response => response.json())
+    fetch(`${API_URL}/conservation_stats`) // Llama a la API para obtener los datos
+        .then(response => response.json()) // Convierte la respuesta a JSON
         .then(data => {
-            const statsList = document.getElementById('stats-list');
-            statsList.innerHTML = data.map(stat =>
-                `<tr>
+            const statsList = document.getElementById('conservation-stats-list'); // Selecciona el tbody de la tabla
+            statsList.innerHTML = ''; // Limpia las filas existentes en la tabla
+
+            // Agrega cada estadística como una nueva fila en la tabla
+            data.forEach(stat => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
                     <td>${stat.animalid}</td>
                     <td>${stat.year}</td>
                     <td>${stat.population_in_wild}</td>
                     <td>${stat.population_in_captivity}</td>
                     <td>${stat.status}</td>
-                </tr>`
-            ).join('');
-        });
+                `;
+                statsList.appendChild(row); // Añade la fila a la tabla
+            });
+        })
+        .catch(err => console.error('Error fetching conservation stats:', err)); // Maneja errores
 }
 
-// Add Conservation Stat
+
+
+
+
 function addConservationStat(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevenir recarga de la página
+
+    // Obtener los valores del formulario
     const animalid = document.getElementById('stat-animalid').value;
     const year = document.getElementById('stat-year').value;
     const population_in_wild = document.getElementById('stat-population-wild').value;
     const population_in_captivity = document.getElementById('stat-population-captivity').value;
     const status = document.getElementById('stat-status').value;
 
-    fetch(`${API_URL}/conservation-stats`, {
+    // Enviar los datos al servidor
+    fetch(`${API_URL}/conservation_stats`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ animalid, year, population_in_wild, population_in_captivity, status })
@@ -179,13 +191,14 @@ function addConservationStat(event) {
             }
             return response.json();
         })
-        .then(() => {
-            getConservationStats(); // Recargar la lista
-            alert("Conservation statistic added successfully");
-            document.getElementById('add-stat-form').reset();
+        .then(data => {
+            alert(data.message); // Mostrar mensaje de éxito
+            getConservationStats(); // Recargar la tabla para reflejar los nuevos datos
+            document.getElementById('add-stat-form').reset(); // Limpiar el formulario
         })
-        .catch(err => alert("Error: " + err.message));
+        .catch(err => alert("Error: " + err.message)); // Manejar errores
 }
+
 
 
 // Initialize Event Listeners
@@ -194,10 +207,7 @@ function initialize() {
     document.getElementById('add-animal-form').addEventListener('submit', addAnimal);
     document.getElementById('add-stat-form').addEventListener('submit', addConservationStat);
 
-    // Load initial data
-    getZoos();
-    getAnimals();
-    getConservationStats();
+    
 }
 
 // Run initialize on page load

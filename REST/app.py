@@ -151,58 +151,66 @@ def modify_animal(animal_id):
 
 @app.route('/animals/<animal_id>', methods=['DELETE'])
 def delete_animal_route(animal_id):
-    deleted = delete_animal(XML_FILE, animal_id)
-    if deleted:
-        response = jsonify({"message": "Animal deleted successfully"})
-        print(f"DELETE /animals/{animal_id} Response:", response.json)
-        return response, 200
-    response = jsonify({"error": "Animal not found"})
-    print(f"DELETE /animals/{animal_id} Response:", response.json)
-    return response, 404
+    try:
+        # Primero eliminamos el animal
+        animal_deleted = delete_animal(XML_FILE, animal_id)
+
+        if animal_deleted:
+            # Intentar eliminar estadísticas asociadas al animal
+            stats_deleted = delete_conservation_stat(XML_FILE, animal_id)
+
+            if stats_deleted:
+                return jsonify({"message": f"Animal {animal_id} and its associated conservation stats deleted successfully."}), 200
+            else:
+                return jsonify({"message": f"Animal {animal_id} deleted, but no associated conservation stats found."}), 200
+
+        return jsonify({"error": "Animal not found"}), 404
+    except Exception as e:
+        print(f"Error deleting animal {animal_id}: {e}")
+        return jsonify({"error": "Failed to delete animal"}), 500
 
 # Rutas para estadísticas de conservación
 @app.route('/conservation_stats', methods=['GET'])
 def list_stats():
-    response = jsonify(get_all_conservation_stats(XML_FILE))
-    print("GET /conservation_stats Response:", response.json)
-    return response
+    try:
+        response = jsonify(get_all_conservation_stats(XML_FILE))
+        return response
+    except Exception as e:
+        print(f"Error fetching conservation stats: {e}")
+        return jsonify({"error": "Failed to fetch conservation stats"}), 500
 
 @app.route('/conservation_stats/<animal_id>', methods=['GET'])
 def get_stat_by_animal(animal_id):
-    stats = get_all_conservation_stats(XML_FILE)  # Obtiene todas las estadísticas
-    filtered_stats = [stat for stat in stats if stat["animalid"] == animal_id]  # Filtra por animal_id
-    
-    if filtered_stats:
-        response = jsonify(filtered_stats)
-        print(f"GET /conservation_stats/{animal_id} Response:", response.json)
-        return response
-    response = jsonify({"error": "No statistics found for the given animal ID"})
-    print(f"GET /conservation_stats/{animal_id} Response:", response.json)
-    return response, 404
-
+    try:
+        stats = get_all_conservation_stats(XML_FILE)
+        filtered_stats = [stat for stat in stats if stat["animalid"] == animal_id]
+        if filtered_stats:
+            return jsonify(filtered_stats)
+        return jsonify({"error": "No statistics found for the given animal ID"}), 404
+    except Exception as e:
+        print(f"Error fetching stats for animal {animal_id}: {e}")
+        return jsonify({"error": "Failed to fetch conservation stats"}), 500
 
 @app.route('/conservation_stats', methods=['POST'])
 def create_stat():
     data = request.get_json()
-    print("POST /conservation_stats Request Data:", data)
-    if not data:
-        response = jsonify({"error": "Invalid or missing JSON"})
-        print("POST /conservation_stats Response:", response.json)
-        return response, 400
+    if not data or not all(k in data for k in ["animalid", "year", "population_in_wild", "population_in_captivity", "status"]):
+        return jsonify({"error": "Invalid or missing JSON fields"}), 400
+
     new_id = add_conservation_stat(XML_FILE, data)
-    response = jsonify({"message": "Stat added", "id": new_id})
-    print("POST /conservation_stats Response:", response.json)
-    return response, 201
+    if new_id:
+        return jsonify({"message": "Stat added", "id": new_id}), 201
+    return jsonify({"error": "Failed to add conservation stat"}), 500
 
 @app.route('/conservation_stats/<animal_id>', methods=['DELETE'])
 def remove_stat(animal_id):
-    if delete_conservation_stat(XML_FILE, animal_id):
-        response = jsonify({"message": "Stat deleted"})
-        print(f"DELETE /conservation_stats/{animal_id} Response:", response.json)
-        return response
-    response = jsonify({"error": "Stat not found"})
-    print(f"DELETE /conservation_stats/{animal_id} Response:", response.json)
-    return response, 404
+    try:
+        if delete_conservation_stat(XML_FILE, animal_id):
+            return jsonify({"message": "Stat deleted"}), 200
+        return jsonify({"error": "Stat not found"}), 404
+    except Exception as e:
+        print(f"Error deleting stat for animal {animal_id}: {e}")
+        return jsonify({"error": "Failed to delete stat"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

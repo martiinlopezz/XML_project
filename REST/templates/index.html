@@ -76,7 +76,38 @@
                 <button type="submit">Add Animal</button>
             </form>
             
-        </section>
+
+             <!-- Conservation Stats Section -->
+             <section>
+                <h2>Conservation Statistics</h2>
+                <button onclick="getConservationStats()">Load Conservation Stats</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Animal ID</th>
+                            <th>Year</th>
+                            <th>Population in Wild</th>
+                            <th>Population in Captivity</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="conservation-stats-list"></tbody>
+                </table>
+                <h3>Add a Conservation Stat</h3>
+                <form id="add-stat-form">
+                    <label for="stat-animalid">Animal ID:</label>
+                    <input type="text" id="stat-animalid" required>
+                    <label for="stat-year">Year:</label>
+                    <input type="number" id="stat-year" required>
+                    <label for="stat-population-wild">Population in Wild:</label>
+                    <input type="number" id="stat-population-wild" required>
+                    <label for="stat-population-captivity">Population in Captivity:</label>
+                    <input type="number" id="stat-population-captivity" required>
+                    <label for="stat-status">Status:</label>
+                    <input type="text" id="stat-status" required>
+                    <button type="submit">Add Conservation Stat</button>
+                </form>
+            </section>
     </main>
     <footer>
         <p>&copy; 2025 Zoo Management System</p>

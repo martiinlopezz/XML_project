@@ -119,6 +119,12 @@
         <habitat>Savanna</habitat>
         <diet>dasd</diet>
     </animal>
+    <animal id="animal200" species="Mammal" zooid="zoo01">
+        <name>Test Animal</name>
+        <scientific_name>Testus animalus</scientific_name>
+        <habitat>Test Habitat</habitat>
+        <diet>Herbivore</diet>
+    </animal>
     <conservation_statistic animalid="animal01" year="2023">
         <population_in_wild>20000</population_in_wild>
         <population_in_captivity>500</population_in_captivity>
