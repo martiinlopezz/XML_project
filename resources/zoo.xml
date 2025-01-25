@@ -157,15 +157,4 @@
         <population_in_captivity>600</population_in_captivity>
         <status>Vulnerable</status>
     </conservation_statistic>
-
-    <!-- Messages -->
-    <message type="announcement">
-        <content>A giant panda cub was born at the Berlin Zoo!</content>
-        <date>2023-09-15</date>
-    </message>
-    <message type="announcement">
-        <content>The London Zoo's new nocturnal exhibition opens this month.</content>
-        <date>2023-07-20</date>
-    </message>
-
 </zoos>

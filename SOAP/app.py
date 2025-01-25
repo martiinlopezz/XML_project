@@ -43,6 +43,7 @@ def save_database(tree):
     with open(DATABASE_FILE, 'w', encoding='utf-8') as file:
         file.write(fixed_xml)
 
+
 @app.route('/wsdl', methods=['GET'])
 def get_wsdl():
     with open('wsdl/service.wsdl', 'r') as wsdl_file:
@@ -88,6 +89,20 @@ def soap_api():
         response = get_zoo_by_id(root, body[0])
     elif operation == "ListAllZoosRequest":
         response = list_all_zoos(root)
+
+    # Route the operation for conservation statistics (existing functionality)
+    elif operation == "AddConservationStatisticRequest":
+        response = add_conservation_statistic(root, body[0])
+    elif operation == "DeleteConservationStatisticRequest":
+        response = delete_conservation_statistic(root, body[0])
+    elif operation == "UpdateConservationStatisticRequest":
+        response = update_conservation_statistic(root, body[0])
+    elif operation == "GetConservationStatisticByIdRequest":
+        response = get_conservation_statistic_by_id(root, body[0])
+    elif operation == "ListAllConservationStatisticsRequest":
+        response = list_all_conservation_statistics(root)
+
+
     else:
         return Response("<response>Unsupported operation</response>", status=400)
 
@@ -119,7 +134,6 @@ def add_zoo(root, data):
         root.append(new_zoo)  # If no animals, append at the end
 
     return f"<response>Zoo with ID {zoo_id} added successfully</response>"
-
 
 
 def delete_zoo(root, data):
@@ -163,6 +177,7 @@ def list_all_zoos(root):
     response = "<zoos>" + "".join([ET.tostring(zoo, encoding='unicode') for zoo in zoos]) + "</zoos>"
     return response
 
+
 def add_animal(root, data):
     # Check for duplicates
     animal_id = data.find("id").text
@@ -186,6 +201,7 @@ def add_animal(root, data):
 
     return f"<response>Animal with ID {animal_id} added successfully</response>"
 
+
 def delete_animal(root, data):
     animal_id = data.find("id").text
     animal_to_remove = root.find(f".//animal[@id='{animal_id}']")
@@ -195,6 +211,7 @@ def delete_animal(root, data):
         return f"<response>Animal with ID {animal_id} removed successfully</response>"
     else:
         return f"<response>Animal with ID {animal_id} not found</response>"
+
 
 def update_animal(root, data):
     animal_id = data.find("id").text
@@ -212,6 +229,7 @@ def update_animal(root, data):
     else:
         return f"<response>Animal with ID {animal_id} not found</response>"
 
+
 def get_animal_by_id(root, data):
     animal_id = data.find("id").text
     animal = root.find(f".//animal[@id='{animal_id}']")
@@ -221,11 +239,80 @@ def get_animal_by_id(root, data):
     else:
         return f"<response>Animal with ID {animal_id} not found</response>"
 
+
 def list_all_animals(root):
     animals = root.findall(".//animal")
     response = "<animals>" + "".join([ET.tostring(animal, encoding='unicode') for animal in animals]) + "</animals>"
     return response
 
+
+def add_conservation_statistic(root, data):
+    animal_id = data.find("animalid").text
+    year = data.find("year").text
+
+    # Check for duplicates
+    if root.find(f".//conservation_statistic[@animalid='{animal_id}'][@year='{year}']") is not None:
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} already exists</response>"
+
+    # Create new conservation statistic
+    new_stat = ET.Element('conservation_statistic', animalid=animal_id, year=year)
+    ET.SubElement(new_stat, 'population_in_wild').text = data.find("population_in_wild").text
+    ET.SubElement(new_stat, 'population_in_captivity').text = data.find("population_in_captivity").text
+    ET.SubElement(new_stat, 'status').text = data.find("status").text
+
+    # Find the last conservation statistic to insert after it
+    last_stat = root.findall(".//conservation_statistic")[-1] if root.findall(".//conservation_statistic") else None
+    if last_stat is not None:
+        index = list(root).index(last_stat)
+        root.insert(index + 1, new_stat)
+    else:
+        root.append(new_stat)
+
+    return f"<response>Conservation statistic for animal ID {animal_id} in year {year} added successfully</response>"
+
+
+def delete_conservation_statistic(root, data):
+    animal_id = data.find("animalid").text
+    year = data.find("year").text
+
+    stat_to_remove = root.find(f".//conservation_statistic[@animalid='{animal_id}'][@year='{year}']")
+    if stat_to_remove is not None:
+        root.remove(stat_to_remove)
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} removed successfully</response>"
+    else:
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} not found</response>"
+
+
+def update_conservation_statistic(root, data):
+    animal_id = data.find("animalid").text
+    year = data.find("year").text
+
+    stat_to_update = root.find(f".//conservation_statistic[@animalid='{animal_id}'][@year='{year}']")
+    if stat_to_update is not None:
+        stat_to_update.find('population_in_wild').text = data.find("population_in_wild").text
+        stat_to_update.find('population_in_captivity').text = data.find("population_in_captivity").text
+        stat_to_update.find('status').text = data.find("status").text
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} updated successfully</response>"
+    else:
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} not found</response>"
+
+
+def get_conservation_statistic_by_id(root, data):
+    animal_id = data.find("animalid").text
+    year = data.find("year").text
+
+    stat = root.find(f".//conservation_statistic[@animalid='{animal_id}'][@year='{year}']")
+    if stat is not None:
+        return ET.tostring(stat, encoding='unicode')
+    else:
+        return f"<response>Conservation statistic for animal ID {animal_id} in year {year} not found</response>"
+
+
+def list_all_conservation_statistics(root):
+    stats = root.findall(".//conservation_statistic")
+    response = "<conservation_statistics>" + "".join(
+        [ET.tostring(stat, encoding='unicode') for stat in stats]) + "</conservation_statistics>"
+    return response
 
 
 if __name__ == '__main__':
