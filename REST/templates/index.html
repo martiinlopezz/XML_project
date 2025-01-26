@@ -44,8 +44,16 @@
 
         <!-- Animals Section -->
         <section>
+            
+            
             <h2>Animals</h2>
             <button onclick="getAnimals()">Load Animals</button>
+            <form id="filter-animals-form">
+                <input type="text" id="filter-species" placeholder="Filter by species">
+                <input type="text" id="filter-habitat" placeholder="Filter by habitat">
+                <input type="text" id="filter-zooid" placeholder="Filter by Zoo ID">
+                <button type="submit">Filter</button>
+            </form>
             <table>
                 <thead>
                     <tr>

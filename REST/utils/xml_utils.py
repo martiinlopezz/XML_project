@@ -93,29 +93,32 @@ def update_zoo(file_path, zoo_id, data):
     return False
 
 def delete_zoo(file_path, zoo_id):
-    try:
-        # Load the XML file
-        tree, root = load_xml(file_path)
+    tree, root = load_xml(file_path)
 
-        # Find the zoo node
-        zoo = root.find(f"zoo[@id='{zoo_id}']")
-        if not zoo:
-            return False
-
-        # Remove animals associated with this zoo
-        animals_to_remove = root.findall(f"animal[@zooid='{zoo_id}']")
-        for animal in animals_to_remove:
-            root.remove(animal)
-
-        # Remove the zoo node
-        root.remove(zoo)
-
-        # Save the updated XML
-        save_xml(tree, file_path)
-        return True
-    except Exception as e:
-        print(f"Error in delete_zoo: {e}")
+    # Encuentra el zoo
+    zoo = root.find(f"zoo[@id='{zoo_id}']")
+    if not zoo:
         return False
+
+    # Encuentra y elimina animales asociados al zoo
+    animals_to_remove = root.findall(f"animal[@zooid='{zoo_id}']")
+    for animal in animals_to_remove:
+        # Eliminar estadísticas asociadas al animal
+        animal_id = animal.get("id")
+        delete_conservation_stat(file_path, animal_id)  # Asegúrate de que esta función se llame correctamente
+
+        # Eliminar el nodo del animal
+        root.remove(animal)
+
+    # Eliminar el zoo
+    root.remove(zoo)
+
+    # Guardar los cambios en el archivo XML
+    save_xml(tree, file_path)
+    return True
+
+
+
 
 
 
@@ -214,12 +217,19 @@ def update_animal(file_path, animal_id, data):
 
 def delete_animal(file_path, animal_id):
     tree, root = load_xml(file_path)
+
+    # Encuentra el animal
     animal = root.find(f"animal[@id='{animal_id}']")
     if animal:
+        # Eliminar estadísticas asociadas al animal
+        delete_conservation_stat(file_path, animal_id)
+        # Eliminar el nodo del animal
         root.remove(animal)
+        # Guardar los cambios en el archivo XML
         save_xml(tree, file_path)
         return True
     return False
+
 
 
 # Funciones para Estadísticas de Conservación
@@ -265,9 +275,17 @@ def add_conservation_stat(file_path, data):
 
 def delete_conservation_stat(file_path, animal_id):
     tree, root = load_xml(file_path)
-    stat = root.find(f"conservation_statistic[@animalid='{animal_id}']")
-    if stat:
-        root.remove(stat)
+
+    # Encuentra todas las estadísticas asociadas al animal_id
+    stats_to_remove = root.findall(f"conservation_statistic[@animalid='{animal_id}']")
+    if stats_to_remove:
+        for stat in stats_to_remove:
+            root.remove(stat)
+
+        # Guardar los cambios en el archivo XML
         save_xml(tree, file_path)
         return True
+
     return False
+
+

@@ -46,9 +46,8 @@ function addZoo(event) {
 }
 
 
-
 function deleteZoo(zooId) {
-    if (!confirm(`Are you sure you want to delete Zoo ${zooId} and all its associated animals?`)) {
+    if (!confirm(`Are you sure you want to delete Zoo ${zooId} and all its associated animals and statistics?`)) {
         return;
     }
 
@@ -60,12 +59,16 @@ function deleteZoo(zooId) {
             return response.json();
         })
         .then(() => {
-            getZoos(); // Refresh the zoo list
-            getAnimals(); // Refresh the animal list
-            alert(`Zoo ${zooId} and its associated animals deleted successfully.`);
+            alert(`Zoo ${zooId} and its associated animals and statistics deleted successfully.`);
+            getZoos(); // Actualizar lista de zoos
+            getAnimals(); // Actualizar lista de animales
+            getConservationStats(); // Actualizar estadísticas
         })
         .catch(err => alert("Error: " + err.message));
 }
+
+
+
 
 
 // Fetch Animals
@@ -121,23 +124,57 @@ function addAnimal(event) {
 
 
 function deleteAnimal(animalId) {
-    if (confirm("Are you sure you want to delete this animal?")) {
+    if (confirm(`Are you sure you want to delete this animal (${animalId})?`)) {
         fetch(`${API_URL}/animals/${animalId}`, {
             method: 'DELETE'
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw new Error(err.error); });
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert(data.message);
+                getAnimals(); // Actualizar la lista
+                getConservationStats(); // Actualizar estadísticas
+            } else if (data.status === "warning") {
+                alert(`Warning: ${data.message}`);
+            } else {
+                alert(`Error: ${data.error}`);
             }
-            return response.json();
         })
-        .then(() => {
-            alert("Animal deleted successfully");
-            getAnimals(); // Refresh the animals list
-        })
-        .catch(err => alert("Error: " + err.message));
+        .catch(err => alert(`An unexpected error occurred: ${err.message}`));
     }
 }
+
+document.getElementById('filter-animals-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const species = document.getElementById('filter-species').value;
+    const habitat = document.getElementById('filter-habitat').value;
+    const zooid = document.getElementById('filter-zooid').value;
+
+    const queryParams = new URLSearchParams({ species, habitat, zooid }).toString();
+
+    fetch(`${API_URL}/animals?${queryParams}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "warning") {
+                alert(data.message);
+            } else {
+                const animalsList = document.getElementById('animals-list');
+                animalsList.innerHTML = data.map(animal =>
+                    `<tr>
+                        <td>${animal.id}</td>
+                        <td>${animal.name}</td>
+                        <td>${animal.species}</td>
+                        <td>${animal.zooid}</td>
+                        <td>${animal.habitat}</td>
+                        <td>${animal.diet}</td>
+                        <td><button onclick="deleteAnimal('${animal.id}')">Delete</button></td>
+                    </tr>`
+                ).join('');
+            }
+        })
+        .catch(err => alert(`Error fetching animals: ${err.message}`));
+});
 
 
 
@@ -187,7 +224,9 @@ function addConservationStat(event) {
     })
         .then(response => {
             if (!response.ok) {
-                return response.json().then(err => { throw new Error(err.error); });
+                return response.json().then(err => {
+                    throw new Error(err.error || "An unexpected error occurred.");
+                });
             }
             return response.json();
         })
@@ -196,9 +235,11 @@ function addConservationStat(event) {
             getConservationStats(); // Recargar la tabla para reflejar los nuevos datos
             document.getElementById('add-stat-form').reset(); // Limpiar el formulario
         })
-        .catch(err => alert("Error: " + err.message)); // Manejar errores
+        .catch(err => {
+            // Mostrar mensaje de error al usuario
+            alert(`Error: ${err.message}`);
+        });
 }
-
 
 
 // Initialize Event Listeners

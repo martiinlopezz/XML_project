@@ -83,24 +83,51 @@ def delete_zoo_endpoint(zoo_id):
     try:
         deleted = delete_zoo(XML_FILE, zoo_id)
         if deleted:
-            response = jsonify({"message": f"Zoo {zoo_id} and its associated animals deleted successfully."})
-            print(f"DELETE /zoos/{zoo_id} Response:", response.json)
-            return response
-        response = jsonify({"error": f"Zoo {zoo_id} not found."})
-        print(f"DELETE /zoos/{zoo_id} Response:", response.json)
-        return response, 404
+            return jsonify({
+                "message": f"Zoo {zoo_id}, its animals, and their associated statistics deleted successfully."
+            }), 200
+        return jsonify({"error": f"Zoo {zoo_id} not found."}), 404
     except Exception as e:
         print(f"Error in delete_zoo endpoint: {e}")
-        response = jsonify({"error": "Failed to delete zoo."})
-        print(f"DELETE /zoos/{zoo_id} Response:", response.json)
-        return response, 500
+        return jsonify({"error": "Failed to delete zoo."}), 500
+
+
 
 # Rutas para Animales
 @app.route('/animals', methods=['GET'])
 def list_animals():
-    response = jsonify(get_all_animals(XML_FILE))
-    print("GET /animals Response:", response.json)
-    return response
+    try:
+        # Obtener parámetros de búsqueda
+        species = request.args.get('species')
+        habitat = request.args.get('habitat')
+        zooid = request.args.get('zooid')
+
+        # Filtrar animales según los parámetros
+        animals = get_all_animals(XML_FILE)
+        if species:
+            animals = [animal for animal in animals if animal['species'].lower() == species.lower()]
+        if habitat:
+            animals = [animal for animal in animals if habitat.lower() in animal['habitat'].lower()]
+        if zooid:
+            animals = [animal for animal in animals if animal['zooid'] == zooid]
+
+        # Verificar si hay resultados
+        if not animals:
+            return jsonify({
+                "message": "No animals found matching the criteria.",
+                "status": "warning",
+            }), 404
+
+        return jsonify(animals), 200
+
+    except Exception as e:
+        print(f"Error fetching animals: {e}")
+        return jsonify({
+            "error": "Failed to fetch animals.",
+            "details": str(e),
+            "status": "error",
+        }), 500
+
 
 @app.route('/animals/<animal_id>', methods=['GET'])
 def get_animal(animal_id):
@@ -152,22 +179,37 @@ def modify_animal(animal_id):
 @app.route('/animals/<animal_id>', methods=['DELETE'])
 def delete_animal_route(animal_id):
     try:
-        # Primero eliminamos el animal
+        # Eliminar el animal
         animal_deleted = delete_animal(XML_FILE, animal_id)
 
         if animal_deleted:
-            # Intentar eliminar estadísticas asociadas al animal
+            # Intentar eliminar las estadísticas de conservación
             stats_deleted = delete_conservation_stat(XML_FILE, animal_id)
 
             if stats_deleted:
-                return jsonify({"message": f"Animal {animal_id} and its associated conservation stats deleted successfully."}), 200
+                return jsonify({
+                    "message": f"Animal {animal_id} and its associated conservation stats deleted successfully.",
+                    "status": "success",
+                }), 200
             else:
-                return jsonify({"message": f"Animal {animal_id} deleted, but no associated conservation stats found."}), 200
+                return jsonify({
+                    "message": f"Animal {animal_id} deleted, but no associated conservation stats were found.",
+                    "status": "warning",
+                }), 200
 
-        return jsonify({"error": "Animal not found"}), 404
+        return jsonify({
+            "error": f"Animal with ID {animal_id} not found.",
+            "status": "error",
+        }), 404
+
     except Exception as e:
         print(f"Error deleting animal {animal_id}: {e}")
-        return jsonify({"error": "Failed to delete animal"}), 500
+        return jsonify({
+            "error": f"Failed to delete animal {animal_id}.",
+            "details": str(e),
+            "status": "error",
+        }), 500
+
 
 # Rutas para estadísticas de conservación
 @app.route('/conservation_stats', methods=['GET'])
@@ -194,13 +236,71 @@ def get_stat_by_animal(animal_id):
 @app.route('/conservation_stats', methods=['POST'])
 def create_stat():
     data = request.get_json()
-    if not data or not all(k in data for k in ["animalid", "year", "population_in_wild", "population_in_captivity", "status"]):
-        return jsonify({"error": "Invalid or missing JSON fields"}), 400
 
-    new_id = add_conservation_stat(XML_FILE, data)
-    if new_id:
-        return jsonify({"message": "Stat added", "id": new_id}), 201
-    return jsonify({"error": "Failed to add conservation stat"}), 500
+    # Validar campos obligatorios
+    required_fields = ["animalid", "year", "population_in_wild", "population_in_captivity", "status"]
+    missing_fields = [field for field in required_fields if field not in data]
+
+    if missing_fields:
+        return jsonify({
+            "error": "Missing required fields.",
+            "missing_fields": missing_fields,
+            "status": "error",
+        }), 400
+
+    try:
+        # Validar si el animal existe
+        animals = get_all_animals(XML_FILE)
+        animal_ids = [animal['id'] for animal in animals]
+        if data["animalid"] not in animal_ids:
+            return jsonify({
+                "error": f"Animal with ID '{data['animalid']}' does not exist. Cannot add conservation stat.",
+                "status": "error",
+            }), 400
+        
+        if int(data["population_in_wild"]) < 0:
+            return jsonify({
+                "error": "Population in wild cannot be negative.",
+                "status": "error"
+            }), 400
+        
+        try:
+            year = int(data["year"])
+            if year < 1900 or year > 2025:
+                return jsonify({
+                    "error": "Year must be between 1900 and 2025.",
+                    "status": "error"
+                }), 400
+        except ValueError:
+            return jsonify({
+                "error": "Year must be a valid number.",
+                "status": "error"
+            }), 400
+
+
+        # Crear la estadística
+        new_id = add_conservation_stat(XML_FILE, data)
+        if new_id:
+            return jsonify({
+                "message": "Conservation stat added successfully.",
+                "id": new_id,
+                "status": "success",
+            }), 201
+
+        return jsonify({
+            "error": "Failed to add conservation stat.",
+            "status": "error",
+        }), 500
+
+    except Exception as e:
+        print(f"Error creating conservation stat: {e}")
+        return jsonify({
+            "error": "An unexpected error occurred.",
+            "details": str(e),
+            "status": "error",
+        }), 500
+
+
 
 @app.route('/conservation_stats/<animal_id>', methods=['DELETE'])
 def remove_stat(animal_id):

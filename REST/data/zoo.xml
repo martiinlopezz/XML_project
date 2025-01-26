@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version='1.0' encoding='utf-8'?>
 <zoos>
-    <!-- Zoos -->
+    
     <zoo id="zoo01" location="Europe">
         <name>Berlin Zoo</name>
         <city>Berlin</city>
         <foundation>1844</foundation>
-    </zoo>
-    <zoo id="zoo02" location="America">
-        <name>San Diego Zoo</name>
-        <city>San Diego</city>
-        <foundation>1916</foundation>
     </zoo>
     <zoo id="zoo03" location="Asia">
         <name>Ueno Zoo</name>
@@ -62,19 +57,7 @@
         <foundation>1954</foundation>
     </zoo>
 
-    <!-- Animals -->
-    <animal id="animal01" species="Mammal" zooid="zoo01">
-        <name>Lion</name>
-        <scientific_name>Panthera leo</scientific_name>
-        <habitat>Savanna</habitat>
-        <diet>Carnivore</diet>
-    </animal>
-    <animal id="animal02" species="Bird" zooid="zoo02">
-        <name>Bald Eagle</name>
-        <scientific_name>Haliaeetus leucocephalus</scientific_name>
-        <habitat>Forests and rivers</habitat>
-        <diet>Carnivore</diet>
-    </animal>
+    
     <animal id="animal03" species="Reptile" zooid="zoo03">
         <name>Komodo Dragon</name>
         <scientific_name>Varanus komodoensis</scientific_name>
@@ -136,12 +119,7 @@
         <diet>Carnivore</diet>
     </animal>
 
-    <!-- Conservation Statistics -->
-    <conservation_statistic animalid="animal01" year="2023">
-        <population_in_wild>20000</population_in_wild>
-        <population_in_captivity>500</population_in_captivity>
-        <status>Vulnerable</status>
-    </conservation_statistic>
+    
     <conservation_statistic animalid="animal02" year="2023">
         <population_in_wild>70000</population_in_wild>
         <population_in_captivity>300</population_in_captivity>
