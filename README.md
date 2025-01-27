@@ -15,3 +15,51 @@ To access Orbeon's Xforms, you must copy the xforms-zoos folder into the Orbeon 
 For Xquery you must run your existdb application and depending on the url you have configured your XML you must change the code. In my case : EXISTDB_URL = "http://localhost:8080/exist/rest/db/zoo"  . Firstly you must load the xml file in the esxitdb interface
 
 To use the API with orbeon you must launch the api doing python api.py and launch orbeon ( previously you must copy the folder to your orbeon launchspace ) 
+
+
+Steps to run maven apache camel : 
+
+You have to install maven then follow the steps :
+
+mvn clean install
+mvn exec:java -Dexec.mainClass=com.zoo.integration.ZooCamelApp
+
+You can check in :
+
+http://localhost:8081/zoo/animals        or       curl -X GET http://localhost:8081/zoo/animals
+
+
+. Obtener todos los animales
+
+curl -X GET "http://localhost:8081/zoo/animals"
+
+b. Filtrar animales por tipo
+
+curl -X GET "http://localhost:8081/zoo/animals/filter?type=Mammal"
+
+c. Filtrar por hábitat
+
+curl -X GET "http://localhost:8081/zoo/animals/filter?habitat=Savanna"
+
+d. Filtrar por zoo
+
+curl -X GET "http://localhost:8081/zoo/animals/filter?zooName=Berlin%20Zoo"
+
+e. Combinar filtros
+
+curl -X GET "http://localhost:8081/zoo/animals/filter?type=Mammal&habitat=Savanna&zooName=Berlin%20Zoo"
+
+
+curl "http://localhost:8081/zoo/animals/filter?type=Bird&zooName=Singapore%20Zoo"
+
+
+
+
+
+You can also test in web :
+
+http://localhost:8081/zoo/animals
+
+http://localhost:8081/zoo/animals/filter?type=Mammal&habitat=Savanna
+
+http://localhost:8081/zoo/animals/filter?type=Bird&zooName=Singapore%20Zoo
