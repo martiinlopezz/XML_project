@@ -39,15 +39,6 @@
                         <xs:attribute name="year" type="xs:integer" use="required" />
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="message" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="content" type="xs:string" />
-                            <xs:element name="date" type="xs:date" />
-                        </xs:sequence>
-                        <xs:attribute name="type" type="xs:string" use="required" />
-                    </xs:complexType>
-                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
